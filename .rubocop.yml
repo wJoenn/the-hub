@@ -1,0 +1,63 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  Exclude:
+    - "Gemfile"
+    - "bin/**/*"
+    - "db/**/*"
+    - "config/**/*"
+    - "node_modules/**/*"
+    - "resources/**/*"
+    - "script/**/*"
+    - "support/**/*"
+    - "spec/spec_helper.rb"
+    - "tmp/**/*"
+    - "test/**/*"
+    - "vendor/**/*"
+
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Lint/MissingSuper:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+Metrics/ClassLength:
+  CountAsOne: ["array", "hash", "heredoc"]
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/MethodLength:
+  CountAsOne: ["array", "hash", "heredoc"]
+
+RSpec/NoExpectationExample:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+Style/ConditionalAssignment:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/MissingRespondToMissing:
+  Enabled: false
+Style/MutableConstant:
+  Enabled: false
+Style/RegexpLiteral:
+  AllowInnerSlashes: true
+  EnforcedStyle: mixed
+Style/SignalException:
+  Enabled: false
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
