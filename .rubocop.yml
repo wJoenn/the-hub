@@ -40,6 +40,8 @@ Metrics/MethodLength:
 
 RSpec/ExampleLength:
   Enabled: false
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
 RSpec/NoExpectationExample:
   Enabled: false
 
