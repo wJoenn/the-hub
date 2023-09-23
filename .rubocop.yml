@@ -38,6 +38,8 @@ Metrics/CyclomaticComplexity:
 Metrics/MethodLength:
   CountAsOne: ["array", "hash", "heredoc"]
 
+RSpec/ExampleLength:
+  Enabled: false
 RSpec/NoExpectationExample:
   Enabled: false
 
