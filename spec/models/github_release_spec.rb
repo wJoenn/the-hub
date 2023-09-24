@@ -18,11 +18,11 @@ RSpec.describe GithubRelease do
 
   describe "associations" do
     it "belongs to a GithubRepository" do
-      expect(described_class.all.map(&:repository)).to all eq repository
+      expect(release_one.repository).to eq repository
     end
 
     it "belongs to a GithubUser" do
-      expect(described_class.all.map(&:author)).to all eq owner
+      expect(release_one.author).to eq owner
     end
   end
 

@@ -24,7 +24,7 @@ RSpec.describe GithubRepository do
     end
 
     it "belongs to a GithubUser" do
-      expect(described_class.all.map(&:owner)).to all eq owner
+      expect(repository_one.owner).to eq owner
     end
   end
 
