@@ -1,14 +1,7 @@
-require "octokit"
-
-class GithubOctokit
-  def initialize(args = {})
-    @client = Octokit::Client.new(access_token: Rails.application.credentials.github_token)
-    @starred_limit = args[:starred_limit] || 30
-    @release_limit = args[:release_limit] || 30
-  end
-
-  def fetch
-    starred_repositories.each { |starred_repository| update_or_create_repository(starred_repository) }
+class GithubFetchReleasesJob < ApplicationJob
+  def perform(args = {})
+    @github = Github.new(args)
+    @github.starred_repositories.each { |starred_repository| update_or_create_repository(starred_repository) }
   end
 
   private
@@ -19,29 +12,14 @@ class GithubOctokit
     github_user
   end
 
-  def md_to_html(markdown)
-    return "" unless markdown
-
-    @client.markdown(markdown)
-  end
-
-  def releases(repository)
-    @client.per_page = @release_limit
-    @client.releases(repository.full_name)
-  end
-
-  def starred_repositories
-    @client.per_page = @starred_limit
-    @client.starred(@client.user.login)
-  end
-
   def update_or_create_release(release, repository)
     github_release = GithubRelease.find_or_initialize_by(gid: release.id)
+
     unless github_release.persisted?
       github_release.update!(
         name: release.name.presence || release.tag_name,
         tag_name: release.tag_name,
-        body: md_to_html(release.body),
+        body: @github.md_to_html(release.body),
         release_date: release.created_at,
         repository:,
         author: find_or_create_user(release.author)
@@ -71,6 +49,6 @@ class GithubOctokit
       owner: find_or_create_user(starred_repository.owner)
     )
 
-    releases(repository).each { |release| update_or_create_release(release, repository) }
+    @github.releases(repository).each { |release| update_or_create_release(release, repository) }
   end
 end
