@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe GithubReleasesController, type: :request do
-  before(:each) do
+  before do
     GithubUser.destroy_all
     GithubRepository.destroy_all
     GithubRelease.destroy_all
@@ -17,10 +17,9 @@ RSpec.describe GithubReleasesController, type: :request do
     GithubRepository.create(gid: 1, full_name: "wJoenn/wJoenn", name: "wJoenn", description: "A repo", owner:)
   end
 
-  let!(:release) { GithubRelease.create(gid:, name:, tag_name:, release_date:, repository:, author: owner) }
-
   describe "GET /index" do
-    before(:each) do
+    before do
+      GithubRelease.create(gid:, name:, tag_name:, release_date:, repository:, author: owner)
       get "/github_releases"
     end
 

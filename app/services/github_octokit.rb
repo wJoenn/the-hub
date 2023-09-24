@@ -15,8 +15,6 @@ class GithubOctokit
 
   def find_or_create_user(user)
     github_user = GithubUser.find_or_initialize_by(gid: user.id)
-    return github_user if github_user.persisted?
-
     github_user.update!(login: user.login, avatar_url: user.avatar_url, html_url: user.html_url)
     github_user
   end
@@ -66,15 +64,12 @@ class GithubOctokit
 
   def update_or_create_repository(starred_repository)
     repository = GithubRepository.find_or_initialize_by(gid: starred_repository.id)
-
-    unless repository.persisted?
-      repository.update!(
-        full_name: starred_repository.full_name,
-        name: starred_repository.name,
-        description: starred_repository.name,
-        owner: find_or_create_user(starred_repository.owner)
-      )
-    end
+    repository.update!(
+      full_name: starred_repository.full_name,
+      name: starred_repository.name,
+      description: starred_repository.name,
+      owner: find_or_create_user(starred_repository.owner)
+    )
 
     releases(repository).each { |release| update_or_create_release(release, repository) }
   end

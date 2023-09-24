@@ -1,7 +1,7 @@
 module IsGithubModel
   extend ActiveSupport::Concern
 
-  included do |model|
+  included do
     validates :gid, presence: true, numericality: { greater_than_or_equal_to: 0, only_integer: true }
   end
 

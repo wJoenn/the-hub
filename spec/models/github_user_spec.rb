@@ -25,7 +25,7 @@ RSpec.describe GithubUser do
         name: "wJoenn v1.0.0",
         tag_name: "v1.0.0",
         release_date: Time.current,
-        repository: repository,
+        repository:,
         author: user_one
       )
 

@@ -2,7 +2,13 @@ require "rails_helper"
 
 RSpec.describe GithubOctokit, type: :service do
   describe "fetch" do
-    before(:context) do
+    after do
+      GithubUser.destroy_all
+      GithubRepository.destroy_all
+      GithubRelease.destroy_all
+    end
+
+    before do
       GithubUser.destroy_all
       GithubRepository.destroy_all
       GithubRelease.destroy_all

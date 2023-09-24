@@ -27,8 +27,5 @@ module TheHub
     config.generators do |generate|
       generate.test_framework :rspec
     end
-
-    config.hosts << /.*\.ngrok\.io/
-    config.hosts << /.*\.ngrok-free\.app/
   end
 end
