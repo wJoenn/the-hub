@@ -28,7 +28,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_24_080906) do
     t.integer "reactions_laugh", default: 0, null: false
     t.integer "reactions_rocket", default: 0, null: false
     t.boolean "read", default: false, null: false
-    t.time "release_date", null: false
+    t.datetime "release_date", null: false
     t.bigint "repository_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

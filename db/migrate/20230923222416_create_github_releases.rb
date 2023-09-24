@@ -14,7 +14,7 @@ class CreateGithubReleases < ActiveRecord::Migration[7.0]
       t.integer :reactions_laugh, null: false, default: 0
       t.integer :reactions_rocket, null: false, default: 0
       t.boolean :read, null: false, default: false
-      t.time :release_date, null: false
+      t.datetime :release_date, null: false
       t.references :repository, null: false, foreign_key: { to_table: :github_repositories }
 
       t.timestamps
