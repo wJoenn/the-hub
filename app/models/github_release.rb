@@ -1,9 +1,10 @@
 class GithubRelease < ApplicationRecord
+  include IsGithubModel
+
   belongs_to :repository, class_name: "GithubRepository"
 
-  validates :gid, :name, :tag_name, :release_date, presence: true
-  validates :gid,
-    :reactions_plus_one,
+  validates :name, :tag_name, :release_date, presence: true
+  validates :reactions_plus_one,
     :reactions_minus_one,
     :reactions_confused,
     :reactions_eyes,
