@@ -27,5 +27,12 @@ module TheHub
     config.generators do |generate|
       generate.test_framework :rspec
     end
+
+    config.middleware.use Rack::MethodOverride
+    config.middleware.use ActionDispatch::Flash
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
+
+    config.active_job.queue_adapter = :good_job
   end
 end
