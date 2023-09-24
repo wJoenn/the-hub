@@ -81,6 +81,8 @@ GEM
       reline (>= 0.3.1)
     diff-lcs (1.5.0)
     docile (1.4.0)
+    dockerfile-rails (1.5.10)
+      rails (>= 3.0.0)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
@@ -245,6 +247,11 @@ GEM
     sawyer (0.9.2)
       addressable (>= 2.3.5)
       faraday (>= 0.17.3, < 3)
+    sentry-rails (5.11.0)
+      railties (>= 5.0)
+      sentry-ruby (~> 5.11.0)
+    sentry-ruby (5.11.0)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -268,6 +275,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   debug
+  dockerfile-rails (>= 1.5)
   dotenv-rails
   good_job
   octokit (~> 5.0)
@@ -280,6 +288,8 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
+  sentry-rails (~> 5.11)
+  sentry-ruby (~> 5.11)
   simplecov
   tzinfo-data
 
