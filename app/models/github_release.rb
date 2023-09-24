@@ -1,6 +1,7 @@
 class GithubRelease < ApplicationRecord
   include IsGithubModel
 
+  belongs_to :author, class_name: "GithubUser"
   belongs_to :repository, class_name: "GithubRepository"
 
   validates :name, :tag_name, :release_date, presence: true

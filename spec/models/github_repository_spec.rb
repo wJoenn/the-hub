@@ -16,7 +16,8 @@ RSpec.describe GithubRepository do
         name: "wJoenn v1.0.0",
         tag_name: "v1.0.0",
         release_date: Time.current,
-        repository: repository_one
+        repository: repository_one,
+        author: owner
       )
 
       expect(repository_one.releases).to contain_exactly release

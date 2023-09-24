@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_23_222416) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_24_080906) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,6 +32,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_23_222416) do
     t.bigint "repository_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "author_id", null: false
+    t.index ["author_id"], name: "index_github_releases_on_author_id"
     t.index ["repository_id"], name: "index_github_releases_on_repository_id"
   end
 
@@ -57,5 +59,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_23_222416) do
   end
 
   add_foreign_key "github_releases", "github_repositories", column: "repository_id"
+  add_foreign_key "github_releases", "github_users", column: "author_id"
   add_foreign_key "github_repositories", "github_users", column: "owner_id"
 end

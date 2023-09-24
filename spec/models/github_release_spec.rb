@@ -11,12 +11,18 @@ RSpec.describe GithubRelease do
     GithubRepository.create(gid: 1, full_name: "wJoenn/wJoenn", name: "wJoenn", description: "A repo", owner:)
   end
 
-  let!(:release_one) { described_class.create(gid:, name:, tag_name:, release_date:, repository:) }
-  let!(:release_two) { described_class.create(gid: "1", name:, tag_name:, release_date:, repository:, read: true) }
+  let!(:release_one) { described_class.create(gid:, name:, tag_name:, release_date:, repository:, author: owner) }
+  let!(:release_two) do
+    described_class.create(gid: "1", name:, tag_name:, release_date:, repository:, read: true, author: owner)
+  end
 
   describe "associations" do
     it "belongs to a GithubRepository" do
       expect(described_class.all.map(&:repository)).to all eq repository
+    end
+
+    it "belongs to a GithubUser" do
+      expect(described_class.all.map(&:author)).to all eq owner
     end
   end
 

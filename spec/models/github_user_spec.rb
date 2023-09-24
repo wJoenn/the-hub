@@ -9,15 +9,30 @@ RSpec.describe GithubUser do
   let!(:user_two) { described_class.create(gid: "1", login:, avatar_url:, html_url:) }
 
   describe "associations" do
-    it "has many GithubRepository" do
-      repository = GithubRepository.create(
+    let!(:repository) do
+      GithubRepository.create(
         gid: 1,
         full_name: "wJoenn/wJoenn",
         name: "wJoenn",
         description: "A repo",
         owner: user_one
       )
+    end
 
+    it "has many GithubRelease" do
+      release = GithubRelease.create(
+        gid: 1,
+        name: "wJoenn v1.0.0",
+        tag_name: "v1.0.0",
+        release_date: Time.current,
+        repository: repository,
+        author: user_one
+      )
+
+      expect(user_one.releases).to contain_exactly release
+    end
+
+    it "has many GithubRepository" do
       expect(user_one.repositories).to contain_exactly repository
     end
   end
