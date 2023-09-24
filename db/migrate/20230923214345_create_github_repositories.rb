@@ -1,7 +1,7 @@
 class CreateGithubRepositories < ActiveRecord::Migration[7.0]
   def change
     create_table :github_repositories do |t|
-      t.bigint :github_id, null: false
+      t.bigint :gid, null: false
       t.string :full_name, null: false
       t.string :name, null: false
       t.string :description, null: false

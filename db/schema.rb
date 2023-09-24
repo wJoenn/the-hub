@@ -10,12 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_23_214345) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_23_222416) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "github_releases", force: :cascade do |t|
+    t.bigint "gid", null: false
+    t.string "name", null: false
+    t.string "tag_name", null: false
+    t.string "body", default: "", null: false
+    t.integer "reactions_plus_one", default: 0, null: false
+    t.integer "reactions_minus_one", default: 0, null: false
+    t.integer "reactions_confused", default: 0, null: false
+    t.integer "reactions_eyes", default: 0, null: false
+    t.integer "reactions_heart", default: 0, null: false
+    t.integer "reactions_hooray", default: 0, null: false
+    t.integer "reactions_laugh", default: 0, null: false
+    t.integer "reactions_rocket", default: 0, null: false
+    t.boolean "read", default: false, null: false
+    t.time "release_date", null: false
+    t.bigint "repository_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["repository_id"], name: "index_github_releases_on_repository_id"
+  end
+
   create_table "github_repositories", force: :cascade do |t|
-    t.bigint "github_id", null: false
+    t.bigint "gid", null: false
     t.string "full_name", null: false
     t.string "name", null: false
     t.string "description", null: false
@@ -27,7 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_23_214345) do
   end
 
   create_table "github_users", force: :cascade do |t|
-    t.bigint "github_id", null: false
+    t.bigint "gid", null: false
     t.string "login", null: false
     t.string "avatar_url", null: false
     t.string "html_url", null: false
@@ -35,5 +56,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_23_214345) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "github_releases", "github_repositories", column: "repository_id"
   add_foreign_key "github_repositories", "github_users", column: "owner_id"
 end

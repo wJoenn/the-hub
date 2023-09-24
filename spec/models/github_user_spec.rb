@@ -1,17 +1,17 @@
 require "rails_helper"
 
 RSpec.describe GithubUser do
-  let!(:github_id) { 1 }
+  let!(:gid) { 1 }
   let!(:login) { "wJoenn" }
   let!(:avatar_url) { "wJoenn_avatar" }
   let!(:html_url) { "wJoenn_html" }
-  let!(:user_one) { described_class.create(github_id:, login:, avatar_url:, html_url:) }
-  let!(:user_two) { described_class.create(github_id: "1", login:, avatar_url:, html_url:) }
+  let!(:user_one) { described_class.create(gid:, login:, avatar_url:, html_url:) }
+  let!(:user_two) { described_class.create(gid: "1", login:, avatar_url:, html_url:) }
 
   describe "associations" do
     it "has many GithubRepository" do
       repository = GithubRepository.create(
-        github_id: 1,
+        gid: 1,
         full_name: "wJoenn/wJoenn",
         name: "wJoenn",
         description: "A repo",
@@ -26,17 +26,17 @@ RSpec.describe GithubUser do
     it "validates the presence of all attributes" do
       expect(user_one).to be_persisted
 
-      test_wrong_record(github_id:, login:, avatar_url:)
-      test_wrong_record(github_id:, login:, html_url:)
-      test_wrong_record(github_id:, avatar_url:, html_url:)
+      test_wrong_record(gid:, login:, avatar_url:)
+      test_wrong_record(gid:, login:, html_url:)
+      test_wrong_record(gid:, avatar_url:, html_url:)
       test_wrong_record(login:, avatar_url:, html_url:)
     end
 
-    it "validates the numericality of github_id" do
+    it "validates the numericality of gid" do
       expect(user_two).to be_persisted
 
-      test_wrong_record(github_id: -1, login:, avatar_url:, html_url:)
-      test_wrong_record(github_id: "a", login:, avatar_url:, html_url:)
+      test_wrong_record(gid: -1, login:, avatar_url:, html_url:)
+      test_wrong_record(gid: "a", login:, avatar_url:, html_url:)
     end
   end
 

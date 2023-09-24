@@ -1,23 +1,27 @@
 require "rails_helper"
 
 RSpec.describe GithubRepository do
-  let!(:github_id) { 1 }
+  let!(:gid) { 1 }
   let!(:full_name) { "wJoenn/wJoenn" }
   let!(:name) { "wJoenn" }
-  let!(:description) { "a_repo" }
-  let!(:owner) do
-    GithubUser.create(github_id: 1, login: "wJoenn", avatar_url: "wJoenn/avatar", html_url: "wJoenn/html")
-  end
-
-  let!(:repository_one) do
-    described_class.create(github_id:, full_name:, name:, description:, owner:)
-  end
-
-  let!(:repository_two) do
-    described_class.create(github_id: "1", full_name:, name:, description:, owner:, starred: false)
-  end
+  let!(:description) { "A repo" }
+  let!(:owner) { GithubUser.create(gid: 1, login: "wJoenn", avatar_url: "wJoenn/avatar", html_url: "wJoenn/html") }
+  let!(:repository_one) { described_class.create(gid:, full_name:, name:, description:, owner:) }
+  let!(:repository_two) { described_class.create(gid: "1", full_name:, name:, description:, owner:, starred: false) }
 
   describe "associations" do
+    it "has many GithubRelease" do
+      release = GithubRelease.create!(
+        gid: 1,
+        name: "wJoenn v1.0.0",
+        tag_name: "v1.0.0",
+        release_date: Time.current,
+        repository: repository_one
+      )
+
+      expect(repository_one.releases).to contain_exactly release
+    end
+
     it "belongs to a GithubUser" do
       expect(described_class.all.map(&:owner)).to all eq owner
     end
@@ -27,25 +31,25 @@ RSpec.describe GithubRepository do
     it "validates the presence of all attributes" do
       expect(repository_one).to be_persisted
 
-      test_wrong_record(github_id:, full_name:, name:, description:)
-      test_wrong_record(github_id:, full_name:, name:, owner:)
-      test_wrong_record(github_id:, full_name:, description:, owner:)
-      test_wrong_record(github_id:, name:, description:, owner:)
+      test_wrong_record(gid:, full_name:, name:, description:)
+      test_wrong_record(gid:, full_name:, name:, owner:)
+      test_wrong_record(gid:, full_name:, description:, owner:)
+      test_wrong_record(gid:, name:, description:, owner:)
       test_wrong_record(full_name:, name:, description:, owner:)
     end
 
-    it "validates the numericality of github_id" do
+    it "validates the numericality of gid" do
       expect(repository_two).to be_persisted
 
-      test_wrong_record(github_id: -1, full_name:, name:, description:, owner:)
-      test_wrong_record(github_id: "a", full_name:, name:, description:, owner:)
+      test_wrong_record(gid: -1, full_name:, name:, description:, owner:)
+      test_wrong_record(gid: "a", full_name:, name:, description:, owner:)
     end
 
     it "validates the booleanility of starred" do
       expect(repository_one).to be_starred
       expect(repository_two).not_to be_starred
 
-      test_wrong_record(github_id: -1, full_name:, name:, description:, owner:, starred: "true")
+      test_wrong_record(gid: 1, full_name:, name:, description:, owner:, starred: nil)
     end
   end
 
