@@ -5,7 +5,10 @@ RSpec.describe GithubRepository do
   let!(:full_name) { "wJoenn/wJoenn" }
   let!(:name) { "wJoenn" }
   let!(:description) { "A repo" }
-  let!(:owner) { GithubUser.create(gid: 1, login: "wJoenn", avatar_url: "wJoenn/avatar", html_url: "wJoenn/html") }
+  let!(:owner) do
+    GithubUser.create(gid: 1, login: "wJoenn", gh_type: "User", avatar_url: "wJoenn/avatar", html_url: "wJoenn/html")
+  end
+
   let!(:repository_one) { described_class.create(gid:, full_name:, name:, description:, owner:) }
   let!(:repository_two) { described_class.create(gid: "1", full_name:, name:, description:, owner:, starred: false) }
 

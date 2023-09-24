@@ -11,7 +11,9 @@ RSpec.describe GithubReleasesController, type: :request do
   let!(:name) { "wJoenn v1.0.0" }
   let!(:tag_name) { "v1.0.0" }
   let!(:release_date) { Time.current }
-  let!(:owner) { GithubUser.create(gid: 1, login: "wJoenn", avatar_url: "wJoenn/avatar", html_url: "wJoenn/html") }
+  let!(:owner) do
+    GithubUser.create(gid: 1, login: "wJoenn", gh_type: "User", avatar_url: "wJoenn/avatar", html_url: "wJoenn/html")
+  end
 
   let!(:repository) do
     GithubRepository.create(gid: 1, full_name: "wJoenn/wJoenn", name: "wJoenn", description: "A repo", owner:)
@@ -53,6 +55,7 @@ RSpec.describe GithubReleasesController, type: :request do
         "author" => {
           "id" => owner.gid,
           "login" => owner.login,
+          "type" => owner.gh_type,
           "avatar_url" => owner.avatar_url,
           "html_url" => owner.html_url
         },
@@ -61,10 +64,12 @@ RSpec.describe GithubReleasesController, type: :request do
           "full_name" => repository.full_name,
           "name" => repository.name,
           "description" => repository.description,
+          "language" => nil,
           "starred" => true,
           "owner" => {
             "id" => owner.gid,
             "login" => owner.login,
+            "type" => owner.gh_type,
             "avatar_url" => owner.avatar_url,
             "html_url" => owner.html_url
           }

@@ -8,5 +8,5 @@ class GithubUser < ApplicationRecord
     inverse_of: :owner,
     dependent: :destroy
 
-  validates :login, :avatar_url, :html_url, presence: true
+  validates :login, :gh_type, :avatar_url, :html_url, presence: true
 end

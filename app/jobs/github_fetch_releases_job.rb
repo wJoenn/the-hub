@@ -8,7 +8,7 @@ class GithubFetchReleasesJob < ApplicationJob
 
   def find_or_create_user(user)
     github_user = GithubUser.find_or_initialize_by(gid: user.id)
-    github_user.update!(login: user.login, avatar_url: user.avatar_url, html_url: user.html_url)
+    github_user.update!(login: user.login, gh_type: user.type, avatar_url: user.avatar_url, html_url: user.html_url)
     github_user
   end
 
@@ -46,6 +46,7 @@ class GithubFetchReleasesJob < ApplicationJob
       full_name: starred_repository.full_name,
       name: starred_repository.name,
       description: starred_repository.name,
+      language: starred_repository.language,
       owner: find_or_create_user(starred_repository.owner)
     )
 

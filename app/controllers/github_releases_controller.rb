@@ -44,6 +44,7 @@ class GithubReleasesController < ApplicationController
       full_name: repository.full_name,
       name: repository.name,
       description: repository.description,
+      language: repository.language,
       starred: repository.starred?,
       owner: serialized_user(repository.owner)
     }
@@ -53,6 +54,7 @@ class GithubReleasesController < ApplicationController
     {
       id: user.gid,
       login: user.login,
+      type: user.gh_type,
       avatar_url: user.avatar_url,
       html_url: user.html_url
     }

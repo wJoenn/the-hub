@@ -5,7 +5,9 @@ RSpec.describe GithubRelease do
   let!(:name) { "wJoenn v1.0.0" }
   let!(:tag_name) { "v1.0.0" }
   let!(:release_date) { Time.current }
-  let!(:owner) { GithubUser.create(gid: 1, login: "wJoenn", avatar_url: "wJoenn/avatar", html_url: "wJoenn/html") }
+  let!(:owner) do
+    GithubUser.create(gid: 1, login: "wJoenn", gh_type: "User", avatar_url: "wJoenn/avatar", html_url: "wJoenn/html")
+  end
 
   let!(:repository) do
     GithubRepository.create(gid: 1, full_name: "wJoenn/wJoenn", name: "wJoenn", description: "A repo", owner:)
