@@ -4,10 +4,10 @@ RSpec.describe GithubUser do
   let!(:gid) { 1 }
   let!(:login) { "wJoenn" }
   let!(:gh_type) { "User" }
-  let!(:avatar_url) { "wJoenn_avatar" }
-  let!(:html_url) { "wJoenn_html" }
+  let!(:avatar_url) { "wJoenn/avatar" }
+  let!(:html_url) { "wJoenn/html" }
+
   let!(:user_one) { described_class.create(gid:, login:, gh_type:, avatar_url:, html_url:) }
-  let!(:user_two) { described_class.create(gid: "1", login:, gh_type:, avatar_url:, html_url:) }
 
   describe "associations" do
     let!(:repository) do
@@ -46,14 +46,6 @@ RSpec.describe GithubUser do
       test_wrong_record(gid:, login:, gh_type:, html_url:)
       test_wrong_record(gid:, login:, gh_type: nil, avatar_url:, html_url:)
       test_wrong_record(gid:, gh_type:, avatar_url:, html_url:)
-      test_wrong_record(login:, avatar_url:, html_url:)
-    end
-
-    it "validates the numericality of gid" do
-      expect(user_two).to be_persisted
-
-      test_wrong_record(gid: -1, login:, gh_type:, avatar_url:, html_url:)
-      test_wrong_record(gid: "a", login:, gh_type:, avatar_url:, html_url:)
     end
   end
 

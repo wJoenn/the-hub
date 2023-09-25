@@ -10,23 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_24_200349) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_25_221314) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "github_reactions", force: :cascade do |t|
+    t.bigint "gid", null: false
+    t.bigint "github_user_id", null: false
+    t.string "content", null: false
+    t.bigint "release_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["release_id"], name: "index_github_reactions_on_release_id"
+  end
 
   create_table "github_releases", force: :cascade do |t|
     t.bigint "gid", null: false
     t.string "name", null: false
     t.string "tag_name", null: false
     t.string "body", default: "", null: false
-    t.integer "reactions_plus_one", default: 0, null: false
-    t.integer "reactions_minus_one", default: 0, null: false
-    t.integer "reactions_confused", default: 0, null: false
-    t.integer "reactions_eyes", default: 0, null: false
-    t.integer "reactions_heart", default: 0, null: false
-    t.integer "reactions_hooray", default: 0, null: false
-    t.integer "reactions_laugh", default: 0, null: false
-    t.integer "reactions_rocket", default: 0, null: false
     t.boolean "read", default: false, null: false
     t.datetime "release_date", null: false
     t.bigint "repository_id", null: false
@@ -137,6 +139,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_24_200349) do
     t.index ["scheduled_at"], name: "index_good_jobs_on_scheduled_at", where: "(finished_at IS NULL)"
   end
 
+  add_foreign_key "github_reactions", "github_releases", column: "release_id"
   add_foreign_key "github_releases", "github_repositories", column: "repository_id"
   add_foreign_key "github_releases", "github_users", column: "author_id"
   add_foreign_key "github_repositories", "github_users", column: "owner_id"

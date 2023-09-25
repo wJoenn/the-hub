@@ -1,19 +1,16 @@
 class GithubRelease < ApplicationRecord
   include IsGithubModel
 
+  has_many :reactions,
+    class_name: "GithubReaction",
+    foreign_key: "release_id",
+    inverse_of: :release,
+    dependent: :destroy
+
   belongs_to :author, class_name: "GithubUser"
   belongs_to :repository, class_name: "GithubRepository"
 
   validates :name, :tag_name, :release_date, presence: true
-  validates :reactions_plus_one,
-    :reactions_minus_one,
-    :reactions_confused,
-    :reactions_eyes,
-    :reactions_heart,
-    :reactions_hooray,
-    :reactions_laugh,
-    :reactions_rocket,
-    numericality: { greater_than_or_equal_to: 0, only_integer: true }
   validates :read, inclusion: [true, false]
   validate :release_date_is_a_date
 

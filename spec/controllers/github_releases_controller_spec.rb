@@ -7,21 +7,27 @@ RSpec.describe GithubReleasesController, type: :request do
     GithubRelease.destroy_all
   end
 
-  let!(:gid) { 1 }
-  let!(:name) { "wJoenn v1.0.0" }
-  let!(:tag_name) { "v1.0.0" }
-  let!(:release_date) { Time.current }
   let!(:owner) do
-    GithubUser.create(gid: 1, login: "wJoenn", gh_type: "User", avatar_url: "wJoenn/avatar", html_url: "wJoenn/html")
+    GithubUser.create!(gid: 1, login: "wJoenn", gh_type: "User", avatar_url: "wJoenn/avatar", html_url: "wJoenn/html")
   end
 
   let!(:repository) do
-    GithubRepository.create(gid: 1, full_name: "wJoenn/wJoenn", name: "wJoenn", description: "A repo", owner:)
+    GithubRepository.create!(gid: 1, full_name: "wJoenn/wJoenn", name: "wJoenn", description: "A repo", owner:)
+  end
+
+  let!(:release) do
+    GithubRelease.create!(
+      gid: 1,
+      name: "wJoenn v1.0.0",
+      tag_name: "v1.0.0",
+      release_date: Time.current,
+      repository:, author: owner
+    )
   end
 
   describe "GET /index" do
     before do
-      GithubRelease.create(gid:, name:, tag_name:, release_date:, repository:, author: owner)
+      GithubReaction.create!(gid: 1, github_user_id: 75_388_869, content: "+1", release:)
       get "/github_releases"
     end
 
@@ -36,21 +42,45 @@ RSpec.describe GithubReleasesController, type: :request do
 
     it "returns an array of releases" do
       expect(response.parsed_body["releases"]).to eq [{
-        "id" => gid,
-        "name" => name,
-        "tag_name" => tag_name,
+        "id" => release.gid,
+        "name" => release.name,
+        "tag_name" => release.tag_name,
         "body" => "",
-        "created_at" => release_date.strftime("%Y-%m-%dT%H:%M:%S.%LZ"),
+        "created_at" => release.release_date.strftime("%Y-%m-%dT%H:%M:%S.%LZ"),
         "read" => false,
         "reactions" => {
-          "+1" => 0,
-          "-1" => 0,
-          "confused" => 0,
-          "eyes" => 0,
-          "heart" => 0,
-          "hooray" => 0,
-          "laugh" => 0,
-          "rocket" => 0
+          "+1" => {
+            "amount" => 1,
+            "reacted" => true
+          },
+          "-1" => {
+            "amount" => 0,
+            "reacted" => false
+          },
+          "confused" => {
+            "amount" => 0,
+            "reacted" => false
+          },
+          "eyes" => {
+            "amount" => 0,
+            "reacted" => false
+          },
+          "heart" => {
+            "amount" => 0,
+            "reacted" => false
+          },
+          "hooray" => {
+            "amount" => 0,
+            "reacted" => false
+          },
+          "laugh" => {
+            "amount" => 0,
+            "reacted" => false
+          },
+          "rocket" => {
+            "amount" => 0,
+            "reacted" => false
+          }
         },
         "author" => {
           "id" => owner.gid,

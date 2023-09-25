@@ -6,13 +6,19 @@ class GithubFetchReleasesJob < ApplicationJob
 
   private
 
+  def find_or_create_reaction(release, reaction)
+    github_reaction = GithubReaction.find_or_initialize_by(gid: reaction["id"])
+    github_reaction.update!(github_user_id: reaction["user"]["id"], content: reaction["content"], release:)
+    github_reaction
+  end
+
   def find_or_create_user(user)
     github_user = GithubUser.find_or_initialize_by(gid: user.id)
     github_user.update!(login: user.login, gh_type: user.type, avatar_url: user.avatar_url, html_url: user.html_url)
     github_user
   end
 
-  def update_or_create_release(release, repository)
+  def update_or_create_release(repository, release)
     github_release = GithubRelease.find_or_initialize_by(gid: release.id)
 
     unless github_release.persisted?
@@ -26,18 +32,7 @@ class GithubFetchReleasesJob < ApplicationJob
       )
     end
 
-    return if release.reactions.nil?
-
-    github_release.update!(
-      reactions_plus_one: release.reactions[:"+1"],
-      reactions_minus_one: release.reactions[:"-1"],
-      reactions_confused: release.reactions.confused,
-      reactions_eyes: release.reactions.eyes,
-      reactions_heart: release.reactions.heart,
-      reactions_hooray: release.reactions.hooray,
-      reactions_laugh: release.reactions.laugh,
-      reactions_rocket: release.reactions.rocket
-    )
+    @github.reactions(repository, github_release).each { |reaction| find_or_create_reaction(github_release, reaction) }
   end
 
   def update_or_create_repository(starred_repository)
@@ -50,6 +45,6 @@ class GithubFetchReleasesJob < ApplicationJob
       owner: find_or_create_user(starred_repository.owner)
     )
 
-    @github.releases(repository).each { |release| update_or_create_release(release, repository) }
+    @github.releases(repository).each { |release| update_or_create_release(repository, release) }
   end
 end

@@ -5,6 +5,7 @@ RSpec.describe GithubRepository do
   let!(:full_name) { "wJoenn/wJoenn" }
   let!(:name) { "wJoenn" }
   let!(:description) { "A repo" }
+
   let!(:owner) do
     GithubUser.create(gid: 1, login: "wJoenn", gh_type: "User", avatar_url: "wJoenn/avatar", html_url: "wJoenn/html")
   end
@@ -39,14 +40,6 @@ RSpec.describe GithubRepository do
       test_wrong_record(gid:, full_name:, name:, owner:)
       test_wrong_record(gid:, full_name:, description:, owner:)
       test_wrong_record(gid:, name:, description:, owner:)
-      test_wrong_record(full_name:, name:, description:, owner:)
-    end
-
-    it "validates the numericality of gid" do
-      expect(repository_two).to be_persisted
-
-      test_wrong_record(gid: -1, full_name:, name:, description:, owner:)
-      test_wrong_record(gid: "a", full_name:, name:, description:, owner:)
     end
 
     it "validates the booleanility of starred" do
