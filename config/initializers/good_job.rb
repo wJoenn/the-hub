@@ -3,7 +3,7 @@ Rails.application.configure do
     config.good_job.execution_mode = :async
   end
 
-  config.good_job.enable_cron
+  config.good_job.enable_cron = true
 
   config.good_job.cron = {
     github_fetch_releases: {
