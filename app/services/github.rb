@@ -1,5 +1,4 @@
 require "octokit"
-require "net/http"
 
 class Github
   def initialize(args = {})
@@ -7,6 +6,26 @@ class Github
     @starred_limit = args[:starred_limit] || 30
     @release_limit = args[:release_limit] || 30
     @reaction_limit = args[:reaction_limit] || 100
+
+    @base_url = "https://api.github.com"
+    @headers = {
+      "Accept" => "application/vnd.github+json",
+      "Authorization" => "Bearer #{Rails.application.credentials.github_token}",
+      "X-GitHub-Api-Version" => "2022-11-28"
+    }
+  end
+
+  def create_reaction(repository, release, content)
+    uri = URI("#{@base_url}/repos/#{repository.full_name}/releases/#{release.gid}/reactions")
+    body = { content: }.to_json
+
+    HTTParty.post(uri, body:, headers: @headers)
+  end
+
+  def delete_reaction(repository, release, reaction)
+    uri = URI("#{@base_url}/repos/#{repository.full_name}/releases/#{release.gid}/reactions/#{reaction.gid}")
+
+    HTTParty.delete(uri, headers: @headers)
   end
 
   def md_to_html(markdown)
@@ -17,11 +36,9 @@ class Github
 
   def reactions(repository, release, page = 1)
     query = "?per_page=#{@reaction_limit}&page=#{page}"
-    uri = URI("https://api.github.com/repos/#{repository.full_name}/releases/#{release.gid}/reactions#{query}")
+    uri = URI("#{@base_url}/repos/#{repository.full_name}/releases/#{release.gid}/reactions#{query}")
 
-    response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |https|
-      https.request(get_request(uri))
-    end
+    response = HTTParty.get(uri, headers: @headers)
 
     reactions = JSON.parse(response.body)
     reactions.concat(reactions(repository, release, page + 1)) if reactions.length == 100 * page
@@ -36,17 +53,5 @@ class Github
   def starred_repositories
     @client.per_page = @starred_limit
     @client.starred(@client.user.login)
-  end
-
-  private
-
-  def get_request(uri)
-    request = Net::HTTP::Get.new(uri)
-
-    request["Accept"] = "application/vnd.github+json"
-    request["Authorization"] = "Bearer #{Rails.application.credentials.github_token}"
-    request["X-GitHub-Api-Version"] = "2022-11-28"
-
-    request
   end
 end
