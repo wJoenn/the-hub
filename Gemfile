@@ -36,6 +36,9 @@ gem "bootsnap", require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem "rack-cors"
 
+# [https://github.com/jnunemaker/httparty]
+gem "httparty"
+
 # Github rest api fetcher [https://github.com/octokit/octokit.rb]
 gem "octokit", "~> 5.0"
 
