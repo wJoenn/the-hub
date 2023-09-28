@@ -19,9 +19,10 @@ class GithubReactionsController < ApplicationController
 
   def destroy
     reaction = GithubReaction.find_or_initialize_by(id: params[:id])
+    gid = reaction.gid
     reaction.destroy!
 
-    GithubHandleReactionJob.perform_later(@repository, @release, reaction, "delete")
+    GithubHandleReactionJob.perform_later(@repository, @release, gid, "delete")
 
     render :json, status: :ok
   end
@@ -38,7 +39,7 @@ class GithubReactionsController < ApplicationController
 
   def serialized_reaction(reaction)
     {
-      id: reaction.gid,
+      id: reaction.id,
       user_id: reaction.github_user_id,
       content: reaction.content
     }

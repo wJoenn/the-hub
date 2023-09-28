@@ -22,8 +22,8 @@ class Github
     HTTParty.post(uri, body:, headers: @headers)
   end
 
-  def delete_reaction(repository, release, reaction)
-    uri = URI("#{@base_url}/repos/#{repository.full_name}/releases/#{release.gid}/reactions/#{reaction.gid}")
+  def delete_reaction(repository, release, gid)
+    uri = URI("#{@base_url}/repos/#{repository.full_name}/releases/#{release.gid}/reactions/#{gid}")
 
     HTTParty.delete(uri, headers: @headers)
   end

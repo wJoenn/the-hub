@@ -41,15 +41,7 @@ RSpec.describe GithubHandleReactionJob do
   end
 
   it "DELETE a reaction from github" do
-    response = described_class.perform_now(repository, release, reaction, "delete")
+    response = described_class.perform_now(repository, release, reaction.gid, "delete")
     expect(response.code).to eq 204
   end
-
-  # it "finds or create new GithubRelease" do
-  #   expect(GithubRelease.count).to eq 1
-  # end
-
-  # it "finds or create new GithubReaction" do
-  #   expect(GithubReaction.count).to be >= 1
-  # end
 end
