@@ -6,7 +6,7 @@ RSpec.describe GithubReactionsController, type: :request do
   end
 
   let!(:repository) do
-    GithubRepository.create!(gid: 695_661_101, full_name: "wJoenn/TheHub", name: "wJoenn", description: "A repo", owner:)
+    GithubRepository.create!(gid: 1, full_name: "wJoenn/TheHub", name: "wJoenn", description: "A repo", owner:)
   end
 
   let!(:release) do
