@@ -1,4 +1,4 @@
-class GithubFetchReleasesJob < ApplicationJob
+class GithubGetReleasesJob < ApplicationJob
   def perform(args = {})
     @github = Github.new(args)
     @github.starred_repositories.each { |starred_repository| update_or_create_repository(starred_repository) }

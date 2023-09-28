@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe GithubFetchReleasesJob do
+RSpec.describe GithubGetReleasesJob do
   before do
     described_class.perform_now({ starred_limit: 1, release_limit: 1, reaction_limit: 1 })
     described_class.perform_now({ starred_limit: 1, release_limit: 1, reaction_limit: 1 })

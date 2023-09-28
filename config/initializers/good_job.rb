@@ -6,7 +6,7 @@ Rails.application.configure do
   config.good_job.cron = {
     github_get_releases: {
       cron: ->(last_ran) { (last_ran.blank? ? Time.current : last_ran + 2.hours).at_beginning_of_minute },
-      class: "GithubFetchReleasesJob",
+      class: "GithubGetReleasesJob",
       kwargs: { starred_limit: 60, release_limit: 5 },
       description: "Fetching Github for new releases"
     }
