@@ -25,9 +25,10 @@ RSpec.describe GithubReleasesController, type: :request do
     )
   end
 
+  let!(:reaction) { GithubReaction.create!(gid: 1, github_user_id: 75_388_869, content: "+1", release:) }
+
   describe "GET /index" do
     before do
-      GithubReaction.create!(gid: 1, github_user_id: 75_388_869, content: "+1", release:)
       get "/github_releases"
     end
 
@@ -48,40 +49,11 @@ RSpec.describe GithubReleasesController, type: :request do
         "body" => "",
         "created_at" => release.release_date.strftime("%Y-%m-%dT%H:%M:%S.%LZ"),
         "read" => false,
-        "reactions" => {
-          "+1" => {
-            "amount" => 1,
-            "reacted" => true
-          },
-          "-1" => {
-            "amount" => 0,
-            "reacted" => false
-          },
-          "confused" => {
-            "amount" => 0,
-            "reacted" => false
-          },
-          "eyes" => {
-            "amount" => 0,
-            "reacted" => false
-          },
-          "heart" => {
-            "amount" => 0,
-            "reacted" => false
-          },
-          "hooray" => {
-            "amount" => 0,
-            "reacted" => false
-          },
-          "laugh" => {
-            "amount" => 0,
-            "reacted" => false
-          },
-          "rocket" => {
-            "amount" => 0,
-            "reacted" => false
-          }
-        },
+        "reactions" => [{
+          "id" => reaction.id,
+          "user_id" => 75_388_869,
+          "content" => "+1"
+        }],
         "author" => {
           "id" => owner.gid,
           "login" => owner.login,

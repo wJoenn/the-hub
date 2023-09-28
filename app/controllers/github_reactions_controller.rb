@@ -2,34 +2,28 @@ class GithubReactionsController < ApplicationController
   before_action :set_release, :set_repository, only: %i[create destroy]
 
   def create
-    reaction_params = params.require(:reaction).permit(:content)
-    response = Github.new.create_reaction(@repository, @release, reaction_params[:content])
+    reaction_params = params.require(:github_reaction).permit(:content)
+    reaction = GithubReaction.create!(
+      gid: 0,
+      github_user_id: 75_388_869,
+      content: reaction_params[:content],
+      release: @release
+    )
 
-    if [200, 201].include?(response.code)
-      reaction = JSON.parse(response.body)
-      GithubReaction.create!(
-        gid: reaction["id"],
-        github_user_id: reaction["user"]["id"],
-        content: reaction["content"],
-        release: @release
-      )
+    GithubHandleReactionJob.perform_later(@repository, @release, reaction, "create")
 
-      render :json, status: :created
-    else
-      render :json, status: :not_found
-    end
+    render json: serialized_reaction(reaction), status: :created
+  rescue ActiveRecord::RecordInvalid
+    render :json, status: :unprocessable_entity
   end
 
   def destroy
-    reaction = GithubReaction.find_or_initialize_by(gid: params[:id])
-    response = Github.new.delete_reaction(@repository, @release, reaction)
+    reaction = GithubReaction.find_or_initialize_by(id: params[:id])
+    reaction.destroy!
 
-    case response.code
-    when 204
-      reaction.destroy!
-      render :json, status: :ok
-    when 404 then render :json, status: :not_found
-    end
+    GithubHandleReactionJob.perform_later(@repository, @release, reaction, "delete")
+
+    render :json, status: :ok
   end
 
   private
@@ -40,5 +34,13 @@ class GithubReactionsController < ApplicationController
 
   def set_repository
     @repository = GithubRepository.by_gid(params[:github_repository_id])
+  end
+
+  def serialized_reaction(reaction)
+    {
+      id: reaction.gid,
+      user_id: reaction.github_user_id,
+      content: reaction.content
+    }
   end
 end
