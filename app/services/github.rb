@@ -15,9 +15,9 @@ class Github
     }
   end
 
-  def create_reaction(repository, release, content)
+  def create_reaction(repository, release, reaction)
     uri = URI("#{@base_url}/repos/#{repository.full_name}/releases/#{release.gid}/reactions")
-    body = { content: }.to_json
+    body = { content: reaction.content }.to_json
 
     HTTParty.post(uri, body:, headers: @headers)
   end
