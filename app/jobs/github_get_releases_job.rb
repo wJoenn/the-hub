@@ -13,8 +13,20 @@ class GithubGetReleasesJob < ApplicationJob
   end
 
   def find_or_create_user(user)
+    # Remove automatic call once every users have been updated
+    user = @github.user(user.login)
     github_user = GithubUser.find_or_initialize_by(gid: user.id)
-    github_user.update!(login: user.login, gh_type: user.type, avatar_url: user.avatar_url, html_url: user.html_url)
+
+    github_user.update!(
+      login: user.login,
+      gh_type: user.type,
+      avatar_url: user.avatar_url,
+      html_url: user.html_url,
+      name: user.name,
+      bio: user.bio,
+      location: user.location
+    )
+
     github_user
   end
 

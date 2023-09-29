@@ -54,7 +54,10 @@ class GithubReleasesController < ApplicationController
       login: user.login,
       type: user.gh_type,
       avatar_url: user.avatar_url,
-      html_url: user.html_url
+      html_url: user.html_url,
+      name: user.name,
+      bio: user.bio,
+      location: user.location
     }
   end
 end

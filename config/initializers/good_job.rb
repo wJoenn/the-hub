@@ -4,10 +4,22 @@ Rails.application.configure do
   config.good_job.enable_cron = true
 
   config.good_job.cron = {
-    github_get_releases: {
-      cron: ->(last_ran) { (last_ran.blank? ? Time.current : last_ran + 4.hours).at_beginning_of_minute },
+    github_get_releases_morning: {
+      cron: "0 5 * * *",
       class: "GithubGetReleasesJob",
-      kwargs: { starred_limit: 60, release_limit: 5 },
+      kwargs: { starred_limit: 60, release_limit: 3 },
+      description: "Fetching Github for new releases"
+    },
+    github_get_releases_noon: {
+      cron: "0 10 * * *",
+      class: "GithubGetReleasesJob",
+      kwargs: { starred_limit: 60, release_limit: 3 },
+      description: "Fetching Github for new releases"
+    },
+    github_get_releases_afternoon: {
+      cron: "0 15 * * *",
+      class: "GithubGetReleasesJob",
+      kwargs: { starred_limit: 60, release_limit: 3 },
       description: "Fetching Github for new releases"
     }
   }

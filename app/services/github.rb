@@ -3,8 +3,8 @@ require "octokit"
 class Github
   def initialize(args = {})
     @client = Octokit::Client.new(access_token: Rails.application.credentials.github_token)
-    @starred_limit = args[:starred_limit] || 30
-    @release_limit = args[:release_limit] || 30
+    @starred_limit = args[:starred_limit] || 1
+    @release_limit = args[:release_limit] || 1
     @reaction_limit = args[:reaction_limit] || 100
 
     @base_url = "https://api.github.com"
@@ -53,5 +53,9 @@ class Github
   def starred_repositories
     @client.per_page = @starred_limit
     @client.starred(@client.user.login)
+  end
+
+  def user(login)
+    @client.user(login)
   end
 end

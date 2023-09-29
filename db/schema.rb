@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_29_064016) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_29_161459) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,6 +61,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_29_064016) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "gh_type", default: "User", null: false
+    t.string "bio"
+    t.string "name"
+    t.string "location"
   end
 
   create_table "good_job_batches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

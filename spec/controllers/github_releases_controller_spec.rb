@@ -62,7 +62,10 @@ RSpec.describe GithubReleasesController, type: :request do
           "login" => owner.login,
           "type" => owner.gh_type,
           "avatar_url" => owner.avatar_url,
-          "html_url" => owner.html_url
+          "html_url" => owner.html_url,
+          "name" => nil,
+          "bio" => nil,
+          "location" => nil
         },
         "repository" => {
           "id" => repository.gid,
@@ -76,7 +79,10 @@ RSpec.describe GithubReleasesController, type: :request do
             "login" => owner.login,
             "type" => owner.gh_type,
             "avatar_url" => owner.avatar_url,
-            "html_url" => owner.html_url
+            "html_url" => owner.html_url,
+            "name" => nil,
+            "bio" => nil,
+            "location" => nil
           }
         }
       }]
