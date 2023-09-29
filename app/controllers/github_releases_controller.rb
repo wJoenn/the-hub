@@ -26,6 +26,7 @@ class GithubReleasesController < ApplicationController
         name: release.name,
         tag_name: release.tag_name,
         body: release.body,
+        html_url: release.html_url,
         read: release.read?,
         created_at: release.release_date,
         reactions: serialized_reactions(release),

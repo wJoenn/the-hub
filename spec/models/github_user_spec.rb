@@ -25,6 +25,7 @@ RSpec.describe GithubUser do
         gid: 1,
         name: "wJoenn v1.0.0",
         tag_name: "v1.0.0",
+        html_url: "https://www.github.com",
         release_date: Time.current,
         repository:,
         author: user_one

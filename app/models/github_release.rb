@@ -10,7 +10,7 @@ class GithubRelease < ApplicationRecord
   belongs_to :author, class_name: "GithubUser"
   belongs_to :repository, class_name: "GithubRepository"
 
-  validates :name, :tag_name, :release_date, presence: true
+  validates :name, :tag_name, :release_date, :html_url, presence: true
   validates :read, inclusion: [true, false]
   validate :release_date_is_a_date
 

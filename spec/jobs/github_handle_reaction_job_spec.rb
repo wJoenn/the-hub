@@ -18,6 +18,7 @@ RSpec.describe GithubHandleReactionJob do
       gid: 122_695_278,
       name: "wJoenn v1.0.0",
       tag_name: "v1.0.0",
+      html_url: "https://www.github.com",
       release_date: Time.current,
       repository:,
       author: owner

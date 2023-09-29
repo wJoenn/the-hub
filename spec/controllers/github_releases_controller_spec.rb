@@ -20,8 +20,10 @@ RSpec.describe GithubReleasesController, type: :request do
       gid: 1,
       name: "wJoenn v1.0.0",
       tag_name: "v1.0.0",
+      html_url: "https://www.github.com",
       release_date: Time.current,
-      repository:, author: owner
+      repository:,
+      author: owner
     )
   end
 
@@ -47,6 +49,7 @@ RSpec.describe GithubReleasesController, type: :request do
         "name" => release.name,
         "tag_name" => release.tag_name,
         "body" => "",
+        "html_url" => "https://www.github.com",
         "created_at" => release.release_date.strftime("%Y-%m-%dT%H:%M:%S.%LZ"),
         "read" => false,
         "reactions" => [{

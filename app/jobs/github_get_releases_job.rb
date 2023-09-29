@@ -26,6 +26,7 @@ class GithubGetReleasesJob < ApplicationJob
         name: release.name.presence || release.tag_name,
         tag_name: release.tag_name,
         body: @github.md_to_html(release.body),
+        html_url: release.html_url,
         release_date: release.created_at,
         repository:,
         author: find_or_create_user(release.author)

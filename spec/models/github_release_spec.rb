@@ -4,6 +4,7 @@ RSpec.describe GithubRelease do
   let!(:gid) { 1 }
   let!(:name) { "wJoenn v1.0.0" }
   let!(:tag_name) { "v1.0.0" }
+  let!(:html_url) { "https://www.github.com" }
   let!(:release_date) { Time.current }
 
   let!(:owner) do
@@ -14,9 +15,11 @@ RSpec.describe GithubRelease do
     GithubRepository.create(gid: 1, full_name: "wJoenn/wJoenn", name: "wJoenn", description: "A repo", owner:)
   end
 
-  let!(:release_one) { described_class.create(gid:, name:, tag_name:, release_date:, repository:, author: owner) }
+  let!(:release_one) do
+    described_class.create(gid:, name:, tag_name:, html_url:, release_date:, repository:, author: owner)
+  end
   let!(:release_two) do
-    described_class.create(gid: "1", name:, tag_name:, release_date:, repository:, read: true, author: owner)
+    described_class.create(gid: "1", name:, tag_name:, html_url:, release_date:, repository:, read: true, author: owner)
   end
 
   describe "associations" do
