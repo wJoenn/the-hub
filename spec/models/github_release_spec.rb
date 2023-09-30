@@ -38,6 +38,10 @@ RSpec.describe GithubRelease do
 
       test_wrong_record(gid:, name:, tag_name:, release_date:, repository:, read: nil)
     end
+
+    it "validates the DateTime format of released_date" do
+      test_wrong_record(gid:, name:, tag_name:, release_date: "2023/10/01", repository:)
+    end
   end
 
   private

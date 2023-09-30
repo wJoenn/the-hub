@@ -4,7 +4,10 @@ RSpec.describe GithubRepository do
   let!(:gid) { 1 }
   let!(:full_name) { "wJoenn/wJoenn" }
   let!(:name) { "wJoenn" }
-  let!(:description) { "A repo" }
+  let!(:stargazers_count) { 1 }
+  let!(:forks_count) { 1 }
+  let!(:pushed_at) { 1.day.ago }
+  let!(:html_url) { "https://www.github.com" }
 
   let!(:owner) { create(:github_user) }
   let!(:repository_one) { create(:github_repository) }
@@ -26,17 +29,44 @@ RSpec.describe GithubRepository do
     it "validates the presence of all attributes" do
       expect(repository_one).to be_persisted
 
-      test_wrong_record(gid:, full_name:, name:, description:)
-      test_wrong_record(gid:, full_name:, name:, owner:)
-      test_wrong_record(gid:, full_name:, description:, owner:)
-      test_wrong_record(gid:, name:, description:, owner:)
+      test_wrong_record(gid:, owner:, name:, full_name:, stargazers_count:, forks_count:, pushed_at:)
+      test_wrong_record(gid:, owner:, name:, full_name:, stargazers_count:, forks_count:, html_url:)
+      test_wrong_record(gid:, owner:, name:, full_name:, stargazers_count:, pushed_at:, html_url:)
+      test_wrong_record(gid:, owner:, name:, full_name:, forks_count:, pushed_at:, html_url:)
+      test_wrong_record(gid:, owner:, name:, stargazers_count:, forks_count:, pushed_at:, html_url:)
+      test_wrong_record(gid:, owner:, full_name:, stargazers_count:, forks_count:, pushed_at:, html_url:)
+      test_wrong_record(gid:, name:, full_name:, stargazers_count:, forks_count:, pushed_at:, html_url:)
     end
 
     it "validates the booleanility of starred" do
       expect(repository_one).to be_starred
       expect(repository_two).not_to be_starred
 
-      test_wrong_record(gid: 1, full_name:, name:, description:, owner:, starred: nil)
+      test_wrong_record(
+        gid: 1,
+        full_name:,
+        name:,
+        stargazers_count:,
+        forks_count:,
+        pushed_at:,
+        html_url:,
+        owner:,
+        starred: nil
+      )
+    end
+
+    it "validates the numericality of stargazers_count" do
+      test_wrong_record(gid:, owner:, name:, full_name:, stargazers_count: -1, forks_count:, pushed_at:, html_url:)
+      test_wrong_record(gid:, owner:, name:, full_name:, stargazers_count: "a", forks_count:, pushed_at:, html_url:)
+    end
+
+    it "validates the numericality of forks_count" do
+      test_wrong_record(gid:, owner:, name:, full_name:, forks_count: -1, stargazers_count:, pushed_at:, html_url:)
+      test_wrong_record(gid:, owner:, name:, full_name:, forks_count: "a", stargazers_count:, pushed_at:, html_url:)
+    end
+
+    it "validates the DateTime format of pushed_at" do
+      test_wrong_record(gid:, owner:, name:, full_name:, stargazers_count:, forks_count:, pushed_at: "a", html_url:)
     end
   end
 

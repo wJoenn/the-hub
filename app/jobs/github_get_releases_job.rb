@@ -53,8 +53,12 @@ class GithubGetReleasesJob < ApplicationJob
     repository.update!(
       full_name: starred_repository.full_name,
       name: starred_repository.name,
-      description: starred_repository.name,
+      description: starred_repository.description,
       language: starred_repository.language,
+      stargazers_count: starred_repository.stargazers_count,
+      forks_count: starred_repository.forks_count,
+      html_url: starred_repository.html_url,
+      pushed_at: starred_repository.pushed_at,
       owner: find_or_create_user(starred_repository.owner)
     )
 

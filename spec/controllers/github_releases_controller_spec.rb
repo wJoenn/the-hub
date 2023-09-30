@@ -52,6 +52,10 @@ RSpec.describe GithubReleasesController, type: :request do
           "description" => repository.description,
           "language" => repository.language,
           "starred" => repository.starred?,
+          "stargazers_count" => repository.stargazers_count,
+          "forks_count" => repository.forks_count,
+          "pushed_at" => repository.pushed_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ"),
+          "html_url" => repository.html_url,
           "owner" => {
             "id" => owner.gid,
             "login" => owner.login,

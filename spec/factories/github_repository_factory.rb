@@ -6,6 +6,10 @@ FactoryBot.define do
     description { "A repo" }
     starred { true }
     language { "Ruby" }
+    stargazers_count { 1 }
+    forks_count { 1 }
+    html_url { "https://www.github.com" }
+    pushed_at { 1.day.ago }
 
     owner { create(:github_user) }
 
