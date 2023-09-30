@@ -5,7 +5,7 @@ RSpec.describe IsGithubModel, type: :concern do
   let!(:gh_type) { "User" }
   let!(:avatar_url) { "wJoenn/avatar" }
   let!(:html_url) { "wJoenn/html" }
-  let!(:user) { GithubUser.create(gid: 1, login:, gh_type:, avatar_url:, html_url:) }
+  let!(:user) { create(:github_user) }
 
   describe "validations" do
     it "validates the presence of gid" do

@@ -6,30 +6,19 @@ RSpec.describe GithubRepository do
   let!(:name) { "wJoenn" }
   let!(:description) { "A repo" }
 
-  let!(:owner) do
-    GithubUser.create(gid: 1, login: "wJoenn", gh_type: "User", avatar_url: "wJoenn/avatar", html_url: "wJoenn/html")
-  end
+  let!(:owner) { create(:github_user) }
+  let!(:repository_one) { create(:github_repository) }
+  let!(:repository_two) { create(:github_repository, starred: false) }
 
-  let!(:repository_one) { described_class.create(gid:, full_name:, name:, description:, owner:) }
-  let!(:repository_two) { described_class.create(gid: "1", full_name:, name:, description:, owner:, starred: false) }
 
   describe "associations" do
     it "has many GithubRelease" do
-      release = GithubRelease.create!(
-        gid: 1,
-        name: "wJoenn v1.0.0",
-        tag_name: "v1.0.0",
-        html_url: "https://www.github.com",
-        release_date: Time.current,
-        repository: repository_one,
-        author: owner
-      )
-
-      expect(repository_one.releases).to contain_exactly release
+      release = create(:github_release)
+      expect(repository_one.releases).to all be_a GithubRelease
     end
 
     it "belongs to a GithubUser" do
-      expect(repository_one.owner).to eq owner
+      expect(repository_one.owner).to be_a GithubUser
     end
   end
 

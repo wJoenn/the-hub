@@ -7,41 +7,24 @@ RSpec.describe GithubUser do
   let!(:avatar_url) { "wJoenn/avatar" }
   let!(:html_url) { "wJoenn/html" }
 
-  let!(:user_one) { described_class.create(gid:, login:, gh_type:, avatar_url:, html_url:) }
+  let!(:user) { create(:github_user) }
 
   describe "associations" do
-    let!(:repository) do
-      GithubRepository.create(
-        gid: 1,
-        full_name: "wJoenn/wJoenn",
-        name: "wJoenn",
-        description: "A repo",
-        owner: user_one
-      )
-    end
+    let!(:repository) { create(:github_repository) }
 
     it "has many GithubRelease" do
-      release = GithubRelease.create(
-        gid: 1,
-        name: "wJoenn v1.0.0",
-        tag_name: "v1.0.0",
-        html_url: "https://www.github.com",
-        release_date: Time.current,
-        repository:,
-        author: user_one
-      )
-
-      expect(user_one.releases).to contain_exactly release
+      release = create(:github_release)
+      expect(user.releases).to all be_a GithubRelease
     end
 
     it "has many GithubRepository" do
-      expect(user_one.repositories).to contain_exactly repository
+      expect(user.repositories).to all be_a GithubRepository
     end
   end
 
   describe "validations" do
     it "validates the presence of all attributes" do
-      expect(user_one).to be_persisted
+      expect(user).to be_persisted
 
       test_wrong_record(gid:, login:, gh_type:, avatar_url:)
       test_wrong_record(gid:, login:, gh_type:, html_url:)

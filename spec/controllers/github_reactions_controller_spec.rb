@@ -1,26 +1,8 @@
 require "rails_helper"
 
 RSpec.describe GithubReactionsController, type: :request do
-  let!(:owner) do
-    GithubUser.create!(gid: 1, login: "wJoenn", gh_type: "User", avatar_url: "wJoenn/avatar", html_url: "wJoenn/html")
-  end
-
-  let!(:repository) do
-    GithubRepository.create!(gid: 1, full_name: "wJoenn/TheHub", name: "wJoenn", description: "A repo", owner:)
-  end
-
-  let!(:release) do
-    GithubRelease.create!(
-      gid: 122_695_278,
-      name: "wJoenn v1.0.0",
-      tag_name: "v1.0.0",
-      html_url: "https://www.github.com",
-      release_date: Time.current,
-      repository:,
-      author: owner
-    )
-  end
-
+  let!(:repository) { create(:github_repository) }
+  let!(:release) { create(:github_release) }
   let!(:content) { "eyes" }
 
   describe "GET /create" do

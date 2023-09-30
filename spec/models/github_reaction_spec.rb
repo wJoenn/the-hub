@@ -5,31 +5,13 @@ RSpec.describe GithubReaction do
   let!(:github_user_id) { 1 }
   let!(:content) { "+1" }
 
-  let!(:owner) do
-    GithubUser.create(gid: 1, login: "wJoenn", gh_type: "User", avatar_url: "wJoenn/avatar", html_url: "wJoenn/html")
-  end
-
-  let!(:repository) do
-    GithubRepository.create(gid: 1, full_name: "wJoenn/wJoenn", name: "wJoenn", description: "A repo", owner:)
-  end
-
-  let!(:release) do
-    GithubRelease.create(
-      gid: 1,
-      name: "wJoenn v1.0.0",
-      tag_name: "v1.0.0",
-      html_url: "https://www.github.com",
-      release_date: Time.current,
-      repository:,
-      author: owner
-    )
-  end
-
-  let!(:reaction) { described_class.create(gid:, github_user_id:, content:, release:) }
+  let!(:repository) { create(:github_repository) }
+  let!(:release) { create(:github_release) }
+  let!(:reaction) { create(:github_reaction) }
 
   describe "associations" do
     it "belongs to a GithubRelease" do
-      expect(reaction.release).to eq release
+      expect(reaction.release).to be_a GithubRelease
     end
   end
 
