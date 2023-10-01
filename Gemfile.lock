@@ -105,7 +105,7 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    good_job (3.19.2)
+    good_job (3.19.3)
       activejob (>= 6.0.0)
       activerecord (>= 6.0.0)
       concurrent-ruby (>= 1.0.2)
@@ -276,7 +276,7 @@ GEM
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    zeitwerk (2.6.11)
+    zeitwerk (2.6.12)
 
 PLATFORMS
   x86_64-linux
@@ -287,7 +287,7 @@ DEPENDENCIES
   dockerfile-rails (>= 1.5)
   dotenv-rails
   factory_bot_rails
-  good_job
+  good_job (~> 3.19.3)
   httparty
   octokit (~> 7.2.0)
   pg (~> 1.1)
