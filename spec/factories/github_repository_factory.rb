@@ -11,7 +11,7 @@ FactoryBot.define do
     html_url { "https://www.github.com" }
     pushed_at { 1.day.ago }
 
-    owner { create(:github_user) }
+    owner { association :github_user }
 
     trait :is_fake do
       full_name { "wjoenn/FakeRepo" }

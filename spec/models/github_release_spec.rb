@@ -4,12 +4,11 @@ RSpec.describe GithubRelease do
   let!(:gid) { 1 }
   let!(:name) { "wJoenn v1.0.0" }
   let!(:tag_name) { "v1.0.0" }
-  let!(:html_url) { "https://www.github.com" }
+  # let!(:html_url) { "https://www.github.com" }
   let!(:release_date) { Time.current }
 
-  let!(:owner) { create(:github_user) }
   let!(:repository) { create(:github_repository) }
-  let!(:release_one) { create(:github_release, read: true) }
+  let!(:release_one) { create(:github_release, repository:, read: true) }
   let!(:release_two) { create(:github_release) }
 
   describe "associations" do

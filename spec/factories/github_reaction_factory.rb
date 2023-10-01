@@ -4,6 +4,6 @@ FactoryBot.define do
     github_user_id { 75_388_869 }
     content { "+1" }
 
-    release { create(:github_release) }
+    release { association :github_release }
   end
 end

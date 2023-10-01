@@ -5,7 +5,6 @@ RSpec.describe GithubReaction do
   let!(:github_user_id) { 1 }
   let!(:content) { "+1" }
 
-  let!(:repository) { create(:github_repository) }
   let!(:release) { create(:github_release) }
   let!(:reaction) { create(:github_reaction) }
 

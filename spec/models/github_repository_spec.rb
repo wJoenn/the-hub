@@ -13,10 +13,9 @@ RSpec.describe GithubRepository do
   let!(:repository_one) { create(:github_repository) }
   let!(:repository_two) { create(:github_repository, starred: false) }
 
-
   describe "associations" do
     it "has many GithubRelease" do
-      release = create(:github_release)
+      create(:github_release, repository: repository_one)
       expect(repository_one.releases).to all be_a GithubRelease
     end
 

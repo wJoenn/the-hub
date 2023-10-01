@@ -22,7 +22,7 @@ RSpec.describe GithubReleasesController, type: :request do
     end
 
     it "returns an array of releases" do
-      expect(response.parsed_body["releases"]).to contain_exactly ({
+      expect(response.parsed_body["releases"]).to contain_exactly({
         "id" => release.gid,
         "name" => release.name,
         "tag_name" => release.tag_name,

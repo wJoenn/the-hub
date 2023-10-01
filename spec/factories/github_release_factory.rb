@@ -8,7 +8,7 @@ FactoryBot.define do
     release_date { 1.day.ago }
     read { false }
 
-    repository { create(:github_repository) }
-    author { create(:github_user) }
+    repository { association :github_repository }
+    author { association :github_user }
   end
 end
