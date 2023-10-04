@@ -1,7 +1,7 @@
 require "rails_helper"
 
-module GithubGetReleasesJobSpec
-  class Response
+module Github
+  class GetResponse
     attr_reader :body
 
     def initialize
@@ -63,7 +63,7 @@ class User
   end
 end
 
-RSpec.describe GithubGetReleasesJob do
+RSpec.describe Github::GetReleasesJob do
   let!(:client) { Octokit::Client.new(access_token: Rails.application.credentials.github_token) }
 
   before do
@@ -71,7 +71,7 @@ RSpec.describe GithubGetReleasesJob do
     allow(client).to receive_messages(starred: [Starred.new])
     allow(client).to receive_messages(releases: [Release.new])
     allow(client).to receive_messages(user: User.new)
-    allow(HTTParty).to receive_messages(get: GithubGetReleasesJobSpec::Response.new)
+    allow(HTTParty).to receive_messages(get: Github::GetResponse.new)
 
     described_class.perform_now({ reaction_limit: 1 })
     described_class.perform_now({ reaction_limit: 1 })

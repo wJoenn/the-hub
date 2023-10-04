@@ -10,7 +10,7 @@ class GithubReactionsController < ApplicationController
       release: @release
     )
 
-    GithubHandleReactionJob.perform_later(@repository, @release, reaction, "create")
+    Github::CreateReleaseReactionJob.perform_later(@repository, @release, reaction)
 
     render json: serialized_reaction(reaction), status: :created
   rescue ActiveRecord::RecordInvalid
@@ -22,7 +22,7 @@ class GithubReactionsController < ApplicationController
     gid = reaction.gid
     reaction.destroy!
 
-    GithubHandleReactionJob.perform_later(@repository, @release, gid, "delete")
+    Github::DestroyReleaseReactionJob.perform_later(@repository, @release, gid)
 
     render :json, status: :ok
   end
