@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe GithubReaction do
+RSpec.describe Github::Reaction do
   let!(:gid) { 1 }
   let!(:github_user_id) { 1 }
   let!(:content) { "+1" }
@@ -10,7 +10,7 @@ RSpec.describe GithubReaction do
 
   describe "associations" do
     it "belongs to a GithubRelease" do
-      expect(reaction.release).to be_a GithubRelease
+      expect(reaction.release).to be_a Github::Release
     end
   end
 
@@ -40,7 +40,7 @@ RSpec.describe GithubReaction do
   private
 
   def test_wrong_record(params)
-    record = GithubReaction.create(params)
+    record = described_class.create(params)
     expect(record).not_to be_persisted
   end
 end

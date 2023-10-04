@@ -16,6 +16,6 @@ RSpec.describe Github::CreateReleaseReactionJob do
     allow(HTTParty).to receive_messages(post: { "id" => nil })
     described_class.perform_now(repository, release, reaction)
 
-    expect(GithubReaction.count).to eq 0
+    expect(Github::Reaction.count).to eq 0
   end
 end

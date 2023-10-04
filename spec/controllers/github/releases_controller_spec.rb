@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe GithubReleasesController, type: :request do
+RSpec.describe Github::ReleasesController, type: :request do
   let!(:reaction) { create(:github_reaction) }
   let!(:release) { reaction.release }
   let!(:author) { release.author }
@@ -9,7 +9,7 @@ RSpec.describe GithubReleasesController, type: :request do
 
   describe "GET /index" do
     before do
-      get "/github_releases"
+      get "/github/releases"
     end
 
     it "responds with a status of 200" do

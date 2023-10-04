@@ -8,7 +8,7 @@ module Github
     private
 
     def find_or_create_reaction(release, reaction)
-      github_reaction = GithubReaction.find_or_initialize_by(gid: reaction["id"])
+      github_reaction = Github::Reaction.find_or_initialize_by(gid: reaction["id"])
       github_reaction.update!(github_user_id: reaction["user"]["id"], content: reaction["content"], release:)
       github_reaction
     end
@@ -16,7 +16,7 @@ module Github
     def find_or_create_user(user)
       # Remove automatic call once every users have been updated
       user = @github.user(user.login)
-      github_user = GithubUser.find_or_initialize_by(gid: user.id)
+      github_user = Github::User.find_or_initialize_by(gid: user.id)
 
       github_user.update!(
         login: user.login,
@@ -32,7 +32,7 @@ module Github
     end
 
     def update_or_create_release(repository, release)
-      github_release = GithubRelease.find_or_initialize_by(gid: release.id)
+      github_release = Github::Release.find_or_initialize_by(gid: release.id)
 
       unless github_release.persisted?
         github_release.update!(
@@ -52,7 +52,7 @@ module Github
     end
 
     def update_or_create_repository(starred_repository)
-      repository = GithubRepository.find_or_initialize_by(gid: starred_repository.id)
+      repository = Github::Repository.find_or_initialize_by(gid: starred_repository.id)
       repository.update!(
         full_name: starred_repository.full_name,
         name: starred_repository.name,

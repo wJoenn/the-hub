@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :github_release do
+  factory :github_release, class: "Github::Release" do
     gid { 122_695_278 }
     name { "wJoenn v1.0.0" }
     tag_name { "v1.0.0" }

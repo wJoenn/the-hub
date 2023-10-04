@@ -78,18 +78,18 @@ RSpec.describe Github::GetReleasesJob do
   end
 
   it "finds or create new GithubUser" do
-    expect(GithubUser.count).to be >= 1
+    expect(Github::User.count).to be >= 1
   end
 
   it "finds or create new GithubRepository" do
-    expect(GithubRepository.count).to eq 1
+    expect(Github::Repository.count).to eq 1
   end
 
   it "finds or create new GithubRelease" do
-    expect(GithubRelease.count).to eq 1
+    expect(Github::Release.count).to eq 1
   end
 
   it "finds or create new GithubReaction" do
-    expect(GithubReaction.count).to be >= 1
+    expect(Github::Reaction.count).to be >= 1
   end
 end

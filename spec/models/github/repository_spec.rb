@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe GithubRepository do
+RSpec.describe Github::Repository do
   let!(:gid) { 1 }
   let!(:full_name) { "wJoenn/wJoenn" }
   let!(:name) { "wJoenn" }
@@ -16,11 +16,11 @@ RSpec.describe GithubRepository do
   describe "associations" do
     it "has many GithubRelease" do
       create(:github_release, repository: repository_one)
-      expect(repository_one.releases).to all be_a GithubRelease
+      expect(repository_one.releases).to all be_a Github::Release
     end
 
     it "belongs to a GithubUser" do
-      expect(repository_one.owner).to be_a GithubUser
+      expect(repository_one.owner).to be_a Github::User
     end
   end
 
@@ -72,7 +72,7 @@ RSpec.describe GithubRepository do
   private
 
   def test_wrong_record(params)
-    record = GithubRepository.create(params)
+    record = described_class.create(params)
     expect(record).not_to be_persisted
   end
 end

@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :github_user do
+  factory :github_user, class: "Github::User" do
     gid { 1 }
     login { "wJoenn" }
     gh_type { "User" }

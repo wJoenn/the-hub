@@ -20,14 +20,14 @@ RSpec.describe IsGithubModel, type: :concern do
 
   describe "by_gid" do
     it "finds a github model by its gid" do
-      expect(GithubUser.by_gid(user.gid)).to eq user
+      expect(Github::User.by_gid(user.gid)).to eq user
     end
   end
 
   private
 
   def test_wrong_record(params)
-    record = GithubUser.create(params)
+    record = Github::User.create(params)
     expect(record).not_to be_persisted
   end
 end
