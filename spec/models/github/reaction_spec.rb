@@ -9,7 +9,7 @@ RSpec.describe Github::Reaction do
   let!(:reaction) { create(:github_reaction) }
 
   describe "associations" do
-    it "belongs to a GithubRelease" do
+    it "belongs to a Github::Release" do
       expect(reaction.release).to be_a Github::Release
     end
   end

@@ -7,16 +7,17 @@ RSpec.describe Github::Release do
   # let!(:html_url) { "https://www.github.com" }
   let!(:release_date) { Time.current }
 
-  let!(:repository) { create(:github_repository) }
-  let!(:release_one) { create(:github_release, repository:, read: true) }
+  let!(:release_one) { create(:github_release, read: true) }
   let!(:release_two) { create(:github_release) }
+  let!(:author) { release_one.author }
+  let!(:repository) { release_one.repository }
 
   describe "associations" do
-    it "belongs to a GithubRepository" do
+    it "belongs to a Github::Repository" do
       expect(release_one.repository).to be_a Github::Repository
     end
 
-    it "belongs to a GithubUser" do
+    it "belongs to a Github::User" do
       expect(release_one.author).to be_a Github::User
     end
   end
@@ -25,21 +26,22 @@ RSpec.describe Github::Release do
     it "validates the presence of all attributes" do
       expect(release_one).to be_persisted
 
-      test_wrong_record(gid:, name:, tag_name:, release_date:)
-      test_wrong_record(gid:, name:, tag_name:, repository:)
-      test_wrong_record(gid:, name:, release_date:, repository:)
-      test_wrong_record(gid:, tag_name:, release_date:, repository:)
+      test_wrong_record(gid:, name:, tag_name:, release_date:, repository:)
+      test_wrong_record(gid:, name:, tag_name:, release_date:, author:)
+      test_wrong_record(gid:, name:, tag_name:, repository:, author:)
+      test_wrong_record(gid:, name:, release_date:, repository:, author:)
+      test_wrong_record(gid:, tag_name:, release_date:, repository:, author:)
     end
 
     it "validates the booleanility of read" do
       expect(release_one).to be_read
       expect(release_two).not_to be_read
 
-      test_wrong_record(gid:, name:, tag_name:, release_date:, repository:, read: nil)
+      test_wrong_record(gid:, name:, tag_name:, release_date:, repository:, author:, read: nil)
     end
 
     it "validates the DateTime format of released_date" do
-      test_wrong_record(gid:, name:, tag_name:, release_date: "2023/10/01", repository:)
+      test_wrong_record(gid:, name:, tag_name:, release_date: "a", repository:, author:)
     end
   end
 

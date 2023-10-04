@@ -14,12 +14,12 @@ RSpec.describe Github::Repository do
   let!(:repository_two) { create(:github_repository, starred: false) }
 
   describe "associations" do
-    it "has many GithubRelease" do
+    it "has many Github::Release" do
       create(:github_release, repository: repository_one)
       expect(repository_one.releases).to all be_a Github::Release
     end
 
-    it "belongs to a GithubUser" do
+    it "belongs to a Github::User" do
       expect(repository_one.owner).to be_a Github::User
     end
   end
