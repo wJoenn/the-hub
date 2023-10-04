@@ -2,6 +2,7 @@ module Github
   class Repository < ApplicationRecord
     include IsGithubModel
 
+    has_many :issues, class_name: "Github::Issue", inverse_of: :repository, dependent: :destroy
     has_many :releases, class_name: "Github::Release", inverse_of: :repository, dependent: :destroy
 
     belongs_to :owner, class_name: "Github::User"

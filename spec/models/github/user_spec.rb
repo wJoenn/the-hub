@@ -10,6 +10,11 @@ RSpec.describe Github::User do
   let!(:user) { create(:github_user) }
 
   describe "associations" do
+    it "has many Github::Issue" do
+      create(:github_issue, author: user)
+      expect(user.issues).to all be_a Github::Issue
+    end
+
     it "has many Github::Release" do
       create(:github_release, author: user)
       expect(user.releases).to all be_a Github::Release
