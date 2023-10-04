@@ -2,8 +2,6 @@ module Github
   class User < ApplicationRecord
     include IsGithubModel
 
-    self.table_name = "github_users"
-
     has_many :releases,
       class_name: "Github::Release",
       foreign_key: "author_id",

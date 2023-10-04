@@ -2,12 +2,7 @@ module Github
   class Repository < ApplicationRecord
     include IsGithubModel
 
-    self.table_name = "github_repositories"
-
-    has_many :releases,
-      class_name: "Github::Release",
-      inverse_of: :repository,
-      dependent: :destroy
+    has_many :releases, class_name: "Github::Release", inverse_of: :repository, dependent: :destroy
 
     belongs_to :owner, class_name: "Github::User"
 

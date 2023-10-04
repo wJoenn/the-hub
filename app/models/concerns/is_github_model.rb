@@ -9,5 +9,9 @@ module IsGithubModel
     def by_gid(gid)
       find_by(gid:)
     end
+
+    def table_name_prefix
+      "github_"
+    end
   end
 end
