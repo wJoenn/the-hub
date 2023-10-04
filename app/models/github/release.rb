@@ -6,7 +6,6 @@ module Github
 
     has_many :reactions,
       class_name: "Github::Reaction",
-      foreign_key: "release_id",
       inverse_of: :release,
       dependent: :destroy
 

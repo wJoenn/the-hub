@@ -6,7 +6,6 @@ module Github
 
     has_many :releases,
       class_name: "Github::Release",
-      foreign_key: "repository_id",
       inverse_of: :repository,
       dependent: :destroy
 
