@@ -9,7 +9,7 @@ RSpec.describe Github::ReactionsController, type: :request do
     before do
       post "/github/repositories/#{repository.gid}/releases/#{release.gid}/reactions",
         params: {
-          github_reaction: { content: }
+          reaction: { content: }
         }
     end
 
@@ -24,7 +24,7 @@ RSpec.describe Github::ReactionsController, type: :request do
     it "returns a http status of 422" do
       post "/github/repositories/#{repository.gid}/releases/#{release.gid}/reactions",
         params: {
-          github_reaction: { content: "++1" }
+          reaction: { content: "++1" }
         }
 
       expect(response).to have_http_status :unprocessable_entity

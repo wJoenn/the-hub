@@ -3,7 +3,7 @@ module Github
     before_action :set_release, :set_repository, only: %i[create destroy]
 
     def create
-      reaction_params = params.require(:github_reaction).permit(:content)
+      reaction_params = params.require(:reaction).permit(:content)
       reaction = Github::Reaction.create!(
         gid: 0,
         github_user_id: 75_388_869,
