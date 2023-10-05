@@ -5,7 +5,7 @@ RSpec.describe Github::Release do
   let!(:name) { "wJoenn v1.0.0" }
   let!(:tag_name) { "v1.0.0" }
   # let!(:html_url) { "https://www.github.com" }
-  let!(:release_date) { Time.current }
+  let!(:release_date) { 1.day.ago }
 
   let!(:release_one) { create(:github_release, read: true) }
   let!(:release_two) { create(:github_release) }

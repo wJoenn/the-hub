@@ -10,9 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_04_203313) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_05_060041) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "github_comments", force: :cascade do |t|
+    t.bigint "gid", null: false
+    t.string "html_url", null: false
+    t.string "body", null: false
+    t.boolean "read", default: false, null: false
+    t.datetime "released_at", null: false
+    t.bigint "author_id", null: false
+    t.bigint "issue_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_github_comments_on_author_id"
+    t.index ["issue_id"], name: "index_github_comments_on_issue_id"
+  end
 
   create_table "github_issues", force: :cascade do |t|
     t.bigint "gid", null: false
@@ -164,6 +178,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_203313) do
     t.index ["scheduled_at"], name: "index_good_jobs_on_scheduled_at", where: "(finished_at IS NULL)"
   end
 
+  add_foreign_key "github_comments", "github_issues", column: "issue_id"
+  add_foreign_key "github_comments", "github_users", column: "author_id"
   add_foreign_key "github_issues", "github_repositories", column: "repository_id"
   add_foreign_key "github_issues", "github_users", column: "author_id"
   add_foreign_key "github_reactions", "github_releases", column: "release_id"

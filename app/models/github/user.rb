@@ -2,6 +2,12 @@ module Github
   class User < ApplicationRecord
     include IsGithubModel
 
+    has_many :comments,
+      class_name: "Github::Comment",
+      foreign_key: "author_id",
+      inverse_of: :author,
+      dependent: :destroy
+
     has_many :issues,
       class_name: "Github::Issue",
       foreign_key: "author_id",

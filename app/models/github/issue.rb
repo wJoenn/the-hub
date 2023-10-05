@@ -2,6 +2,8 @@ module Github
   class Issue < ApplicationRecord
     include IsGithubModel
 
+    has_many :comments, class_name: "Github::Comment", inverse_of: :issue, dependent: :destroy
+
     belongs_to :author, class_name: "Github::User"
     belongs_to :repository, class_name: "Github::Repository"
 

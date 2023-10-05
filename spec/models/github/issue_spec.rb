@@ -8,13 +8,18 @@ RSpec.describe Github::Issue do
   let!(:gh_type) { "Issue" }
   let!(:number) { 1 }
   let!(:html_url) { "https://www.github.com" }
-  let!(:released_at) { Time.current }
+  let!(:released_at) { 1.day.ago }
 
   let!(:issue) { create(:github_issue) }
   let!(:repository) { issue.repository }
   let!(:author) { issue.author }
 
   describe "associations" do
+    it "has many Github::Comment" do
+      create(:github_comment, issue:)
+      expect(issue.comments).to all be_a Github::Comment
+    end
+
     it "belongs to a Github::Repository" do
       expect(issue.repository).to be_a Github::Repository
     end
