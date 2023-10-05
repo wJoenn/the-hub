@@ -1,10 +1,8 @@
 name: Fly.io
-
 on:
   push:
     branches:
       - master
-
 jobs:
   deploy:
     name: Deploy to Fly.io
