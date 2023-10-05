@@ -7,7 +7,7 @@ module Github
     private
 
     def queried_releases
-      Github::Release.includes(:author, repository: :owner).order(release_date: :desc).limit(30)
+      Github::Release.includes(:author, repository: :owner).order(released_at: :desc).limit(30)
     end
 
     def serialized_reactions(release)
@@ -29,7 +29,7 @@ module Github
           body: release.body,
           html_url: release.html_url,
           read: release.read?,
-          created_at: release.release_date,
+          released_at: release.released_at,
           reactions: serialized_reactions(release),
           repository: serialized_repository(release.repository),
           author: serialized_user(release.author)

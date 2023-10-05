@@ -5,7 +5,7 @@ RSpec.describe Github::Release do
   let!(:name) { "wJoenn v1.0.0" }
   let!(:tag_name) { "v1.0.0" }
   # let!(:html_url) { "https://www.github.com" }
-  let!(:release_date) { 1.day.ago }
+  let!(:released_at) { 1.day.ago }
 
   let!(:release_one) { create(:github_release, read: true) }
   let!(:release_two) { create(:github_release) }
@@ -26,22 +26,22 @@ RSpec.describe Github::Release do
     it "validates the presence of all attributes" do
       expect(release_one).to be_persisted
 
-      test_wrong_record(gid:, name:, tag_name:, release_date:, repository:)
-      test_wrong_record(gid:, name:, tag_name:, release_date:, author:)
+      test_wrong_record(gid:, name:, tag_name:, released_at:, repository:)
+      test_wrong_record(gid:, name:, tag_name:, released_at:, author:)
       test_wrong_record(gid:, name:, tag_name:, repository:, author:)
-      test_wrong_record(gid:, name:, release_date:, repository:, author:)
-      test_wrong_record(gid:, tag_name:, release_date:, repository:, author:)
+      test_wrong_record(gid:, name:, released_at:, repository:, author:)
+      test_wrong_record(gid:, tag_name:, released_at:, repository:, author:)
     end
 
     it "validates the booleanility of read" do
       expect(release_one).to be_read
       expect(release_two).not_to be_read
 
-      test_wrong_record(gid:, name:, tag_name:, release_date:, repository:, author:, read: nil)
+      test_wrong_record(gid:, name:, tag_name:, released_at:, repository:, author:, read: nil)
     end
 
     it "validates the DateTime format of released_date" do
-      test_wrong_record(gid:, name:, tag_name:, release_date: "a", repository:, author:)
+      test_wrong_record(gid:, name:, tag_name:, released_at: "a", repository:, author:)
     end
   end
 

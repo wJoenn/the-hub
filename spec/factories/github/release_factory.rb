@@ -5,7 +5,7 @@ FactoryBot.define do
     tag_name { "v1.0.0" }
     body { "A release" }
     html_url { "https://www.github.com" }
-    release_date { 1.day.ago }
+    released_at { 1.day.ago }
     read { false }
 
     repository { association :github_repository }

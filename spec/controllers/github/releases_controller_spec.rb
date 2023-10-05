@@ -28,7 +28,7 @@ RSpec.describe Github::ReleasesController, type: :request do
         "tag_name" => release.tag_name,
         "body" => release.body,
         "html_url" => release.html_url,
-        "created_at" => release.release_date.strftime("%Y-%m-%dT%H:%M:%S.%LZ"),
+        "released_at" => release.released_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ"),
         "read" => release.read?,
         "reactions" => [{
           "id" => reaction.id,
