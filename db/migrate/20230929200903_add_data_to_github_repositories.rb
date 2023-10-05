@@ -5,7 +5,8 @@ class AddDataToGithubRepositories < ActiveRecord::Migration[7.0]
     add_column :github_repositories, :pushed_at, :datetime
     add_column :github_repositories, :html_url, :string
 
-    GithubRepository.update_all(stargazers_count: 0, forks_count: 0, pushed_at: 1.month.ago, html_url: "www.github.com")
+    Github::Repository
+      .update_all(stargazers_count: 0, forks_count: 0, pushed_at: 1.month.ago, html_url: "www.github.com")
 
     change_column_null :github_repositories, :stargazers_count, false
     change_column_null :github_repositories, :forks_count, false
