@@ -32,7 +32,7 @@ RSpec.describe Github::ReactionsController, type: :request do
   end
 
   describe "GET /destroy" do
-    let!(:reaction) { Github::Reaction.create!(gid: 1, github_user_id: 1, content: "+1", release:) }
+    let!(:reaction) { Github::Reaction.create!(gid: 1, github_user_id: 1, content: "+1", reactable: release) }
 
     before do
       uri = "/github/repositories/#{repository.gid}/releases/#{release.gid}/reactions/#{reaction.id}"

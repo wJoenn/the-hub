@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_06_205507) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_06_210610) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -49,10 +49,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_06_205507) do
     t.bigint "gid", null: false
     t.bigint "github_user_id", null: false
     t.string "content", null: false
-    t.bigint "release_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["release_id"], name: "index_github_reactions_on_release_id"
+    t.string "reactable_type"
+    t.bigint "reactable_id"
+    t.index ["reactable_type", "reactable_id"], name: "index_github_reactions_on_reactable"
   end
 
   create_table "github_releases", force: :cascade do |t|
@@ -182,7 +183,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_06_205507) do
   add_foreign_key "github_comments", "github_users", column: "author_id"
   add_foreign_key "github_issues", "github_repositories", column: "repository_id"
   add_foreign_key "github_issues", "github_users", column: "author_id"
-  add_foreign_key "github_reactions", "github_releases", column: "release_id"
   add_foreign_key "github_releases", "github_repositories", column: "repository_id"
   add_foreign_key "github_releases", "github_users", column: "author_id"
   add_foreign_key "github_repositories", "github_users", column: "owner_id"

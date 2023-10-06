@@ -8,7 +8,7 @@ module Github
         gid: 0,
         github_user_id: 75_388_869,
         content: reaction_params[:content],
-        release: @release
+        reactable: @release
       )
 
       Github::CreateReleaseReactionJob.perform_later(@repository, @release, reaction)

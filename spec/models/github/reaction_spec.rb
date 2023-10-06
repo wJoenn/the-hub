@@ -5,12 +5,12 @@ RSpec.describe Github::Reaction do
   let!(:github_user_id) { 1 }
   let!(:content) { "+1" }
 
-  let!(:release) { create(:github_release) }
-  let!(:reaction) { create(:github_reaction) }
+  let!(:reaction) { create(:github_reaction, :with_release) }
+  let!(:reactable) { reaction.reactable }
 
   describe "associations" do
     it "belongs to a Github::Release" do
-      expect(reaction.release).to be_a Github::Release
+      expect(reaction.reactable).to be_a Github::Release
     end
   end
 
@@ -19,21 +19,21 @@ RSpec.describe Github::Reaction do
       expect(reaction).to be_persisted
 
       test_wrong_record(gid:, github_user_id:, content:)
-      test_wrong_record(gid:, github_user_id:, release:)
-      test_wrong_record(gid:, content:, release:)
+      test_wrong_record(gid:, github_user_id:, reactable:)
+      test_wrong_record(gid:, content:, reactable:)
     end
 
     it "validates the numericality of github_user_id" do
-      test_wrong_record(gid:, github_user_id: -1, content:, release:)
-      test_wrong_record(gid:, github_user_id: "a", content:, release:)
+      test_wrong_record(gid:, github_user_id: -1, content:, reactable:)
+      test_wrong_record(gid:, github_user_id: "a", content:, reactable:)
     end
 
     it "validates the value of content" do
       %w[+1 -1 confused eyes heart hooray laugh rocket].each do |c|
-        expect(described_class.create(gid:, github_user_id:, content: c, release:)).to be_persisted
+        expect(described_class.create(gid:, github_user_id:, content: c, reactable:)).to be_persisted
       end
 
-      test_wrong_record(gid:, github_user_id:, content: "a", release:)
+      test_wrong_record(gid:, github_user_id:, content: "a", reactable:)
     end
   end
 

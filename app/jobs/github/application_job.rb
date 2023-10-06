@@ -2,10 +2,10 @@ module Github
   class ApplicationJob < ApplicationJob
     private
 
-    def find_or_create_reaction(release, reaction)
+    def find_or_create_reaction(reactable, reaction)
       github_reaction = Github::Reaction.find_or_initialize_by(gid: reaction["id"])
       unless github_reaction.persisted?
-        github_reaction.update!(github_user_id: reaction["user"]["id"], content: reaction["content"], release:)
+        github_reaction.update!(github_user_id: reaction["user"]["id"], content: reaction["content"], reactable:)
       end
 
       github_reaction

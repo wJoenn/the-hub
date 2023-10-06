@@ -2,7 +2,7 @@ module Github
   class Release < ApplicationRecord
     include IsGithubModel
 
-    has_many :reactions, class_name: "Github::Reaction", inverse_of: :release, dependent: :destroy
+    has_many :reactions, class_name: "Github::Reaction", inverse_of: :reactable, dependent: :destroy
 
     belongs_to :author, class_name: "Github::User"
     belongs_to :repository, class_name: "Github::Repository"

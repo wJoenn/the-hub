@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Github::CreateReleaseReactionJob do
-  let!(:repository) { create(:github_repository) }
-  let!(:release) { create(:github_release) }
-  let!(:reaction) { create(:github_reaction) }
+  let!(:reaction) { create(:github_reaction, :with_release) }
+  let!(:release) { reaction.reactable }
+  let!(:repository) { release.repository }
 
   it "POST a new reaction on github" do
     allow(HTTParty).to receive_messages(post: { "id" => 2 })

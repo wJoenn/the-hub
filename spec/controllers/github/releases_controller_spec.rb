@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe Github::ReleasesController, type: :request do
-  let!(:reaction) { create(:github_reaction) }
-  let!(:release) { reaction.release }
+  let!(:reaction) { create(:github_reaction, :with_release) }
+  let!(:release) { reaction.reactable }
   let!(:author) { release.author }
   let!(:repository) { release.repository }
   let!(:owner) { repository.owner }
@@ -33,7 +33,8 @@ RSpec.describe Github::ReleasesController, type: :request do
         "reactions" => [{
           "id" => reaction.id,
           "user_id" => reaction.github_user_id,
-          "content" => reaction.content
+          "content" => reaction.content,
+          "reactable_type" => reaction.reactable_type
         }],
         "author" => {
           "id" => author.gid,

@@ -15,7 +15,8 @@ module Github
         {
           id: reaction.id,
           user_id: reaction.github_user_id,
-          content: reaction.content
+          content: reaction.content,
+          reactable_type: reaction.reactable_type
         }
       end
     end
