@@ -30,6 +30,23 @@ class Issue
   end
 end
 
+class Notification
+  attr_reader :repository, :subject
+
+  class Subject
+    attr_reader :url
+
+    def initialize
+      @url = "/1"
+    end
+  end
+
+  def initialize
+    @repository = Repository.new
+    @subject = Subject.new
+  end
+end
+
 class Repository
   attr_reader :id, :name, :full_name, :description, :language, :stargazers_count, :forks_count, :html_url,
     :pushed_at, :owner
@@ -68,6 +85,7 @@ RSpec.describe Github::GetCommentsJob do
 
   before do
     allow(Octokit::Client).to receive_messages(new: client)
+    allow(client).to receive_messages(notifications: [Notification.new])
     allow(client).to receive_messages(repository: Repository.new)
     allow(client).to receive_messages(issue: Issue.new)
     allow(client).to receive_messages(user: User.new)
