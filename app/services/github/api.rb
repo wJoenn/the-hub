@@ -8,6 +8,7 @@ module Github
       @release_limit = args[:release_limit] || 1
       @notification_limit = args[:notification_limit] || 1
       @reaction_limit = args[:reaction_limit] || 1
+      @issue_comment_limit = args[:issue_comment] || 1
 
       @base_url = "https://api.github.com"
       @headers = {
@@ -28,6 +29,15 @@ module Github
       uri = URI("#{@base_url}/repos/#{repository.full_name}/releases/#{release.gid}/reactions/#{reaction_gid}")
 
       HTTParty.delete(uri, headers: @headers)
+    end
+
+    def issue(repository, issue_number)
+      @client.issue(repository.full_name, issue_number)
+    end
+
+    def issue_comments(repository, issue)
+      @client.per_page = @issue_comment_limit
+      @client.issue_comments(repository.full_name, issue.number)
     end
 
     def md_to_html(markdown)
@@ -55,6 +65,10 @@ module Github
     def releases(repository)
       @client.per_page = @release_limit
       @client.releases(repository.full_name)
+    end
+
+    def repository(full_name)
+      @client.repository(full_name)
     end
 
     def starred_repositories

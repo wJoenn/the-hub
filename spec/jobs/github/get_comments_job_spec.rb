@@ -1,36 +1,36 @@
 require "rails_helper"
 
-module Github
-  class GetResponse
-    attr_reader :body
-
-    def initialize
-      @body = [{
-        "id" => 1,
-        "user" => {
-          "id" => 1
-        },
-        "content" => "+1"
-      }].to_json
-    end
-  end
-end
-
-class Release
-  attr_reader :id, :name, :tag_name, :body, :html_url, :created_at, :author
+class Comment
+  attr_reader :id, :body, :html_url, :created_at, :user, :issue
 
   def initialize
     @id = 1
-    @name = "a"
-    @tag_name = "a"
     @body = "a"
     @html_url = "a"
     @created_at = Time.current
-    @author = User.new
+    @user = User.new
+    @issue = Issue.new
   end
 end
 
-class Starred
+class Issue
+  attr_reader :id, :body, :html_url, :state, :title, :gh_type, :number, :created_at, :user, :repository
+
+  def initialize
+    @id = 1
+    @body = "a"
+    @html_url = "a"
+    @state = "a"
+    @title = "a"
+    @gh_type = "a"
+    @number = 1
+    @created_at = Time.current
+    @user = User.new
+    @repository = Repository.new
+  end
+end
+
+class Repository
   attr_reader :id, :name, :full_name, :description, :language, :stargazers_count, :forks_count, :html_url,
     :pushed_at, :owner
 
@@ -63,19 +63,19 @@ class User
   end
 end
 
-RSpec.describe Github::GetReleasesJob do
+RSpec.describe Github::GetCommentsJob do
   let!(:client) { Octokit::Client.new(access_token: Rails.application.credentials.github_token) }
 
   before do
     allow(Octokit::Client).to receive_messages(new: client)
-    allow(client).to receive_messages(starred: [Starred.new])
-    allow(client).to receive_messages(releases: [Release.new])
+    allow(client).to receive_messages(repository: Repository.new)
+    allow(client).to receive_messages(issue: Issue.new)
     allow(client).to receive_messages(user: User.new)
+    allow(client).to receive_messages(issue_comments: [Comment.new])
     allow(client).to receive_messages(markdown: "")
-    allow(HTTParty).to receive_messages(get: Github::GetResponse.new)
 
-    described_class.perform_now({ reaction_limit: 1 })
-    described_class.perform_now({ reaction_limit: 1 })
+    described_class.perform_now
+    described_class.perform_now
   end
 
   it "finds or create new Github::User" do
@@ -86,11 +86,11 @@ RSpec.describe Github::GetReleasesJob do
     expect(Github::Repository.count).to eq 1
   end
 
-  it "finds or create new Github::Release" do
-    expect(Github::Release.count).to eq 1
+  it "finds or create new Github::Issue" do
+    expect(Github::Issue.count).to eq 1
   end
 
-  it "finds or create new Github::Reaction" do
-    expect(Github::Reaction.count).to eq 1
+  it "finds or create new Github::Comment" do
+    expect(Github::Comment.count).to eq 1
   end
 end
