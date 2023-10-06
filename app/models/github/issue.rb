@@ -7,7 +7,7 @@ module Github
     belongs_to :author, class_name: "Github::User"
     belongs_to :repository, class_name: "Github::Repository"
 
-    validates :html_url, :body, :status, :title, :gh_type, :number, :released_at, presence: true
+    validates :html_url, :status, :title, :gh_type, :number, :released_at, presence: true
     validates :number, numericality: { greater_than_or_equal_to: 0, only_integer: true }
     validate :released_at_is_a_datetime
 

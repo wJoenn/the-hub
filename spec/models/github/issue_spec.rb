@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe Github::Issue do
   let!(:gid) { 1 }
-  let!(:body) { "An issue" }
   let!(:status) { "opened" }
   let!(:title) { "This is an issue" }
   let!(:gh_type) { "Issue" }
@@ -33,21 +32,19 @@ RSpec.describe Github::Issue do
     it "validates the presence of all attributes" do
       expect(issue).to be_persisted
 
-      test_wrong_record(gid:, body:, status:, title:, gh_type:, number:, html_url:, released_at:, repository:)
-      test_wrong_record(gid:, body:, status:, title:, gh_type:, number:, html_url:, released_at:, author:)
-      test_wrong_record(gid:, body:, status:, title:, gh_type:, number:, html_url:, repository:, author:)
-      test_wrong_record(gid:, body:, status:, title:, gh_type:, number:, released_at:, repository:, author:)
-      test_wrong_record(gid:, body:, status:, title:, gh_type:, html_url:, released_at:, repository:, author:)
-      test_wrong_record(gid:, body:, status:, title:, number:, html_url:, released_at:, repository:, author:)
-      test_wrong_record(gid:, body:, status:, gh_type:, number:, html_url:, released_at:, repository:, author:)
-      test_wrong_record(gid:, body:, title:, gh_type:, number:, html_url:, released_at:, repository:, author:)
-      test_wrong_record(gid:, status:, title:, gh_type:, number:, html_url:, released_at:, repository:, author:)
+      test_wrong_record(gid:, status:, title:, gh_type:, number:, html_url:, released_at:, repository:)
+      test_wrong_record(gid:, status:, title:, gh_type:, number:, html_url:, released_at:, author:)
+      test_wrong_record(gid:, status:, title:, gh_type:, number:, html_url:, repository:, author:)
+      test_wrong_record(gid:, status:, title:, gh_type:, number:, released_at:, repository:, author:)
+      test_wrong_record(gid:, status:, title:, gh_type:, html_url:, released_at:, repository:, author:)
+      test_wrong_record(gid:, status:, title:, number:, html_url:, released_at:, repository:, author:)
+      test_wrong_record(gid:, status:, gh_type:, number:, html_url:, released_at:, repository:, author:)
+      test_wrong_record(gid:, title:, gh_type:, number:, html_url:, released_at:, repository:, author:)
     end
 
     it "validates the numericality of github_user_id" do
       test_wrong_record(
         gid:,
-        body:,
         status:,
         title:,
         gh_type:,
@@ -60,7 +57,6 @@ RSpec.describe Github::Issue do
 
       test_wrong_record(
         gid:,
-        body:,
         status:,
         title:,
         gh_type:,
@@ -75,7 +71,6 @@ RSpec.describe Github::Issue do
     it "validates the DateTime format of released_at" do
       test_wrong_record(
         gid:,
-        body:,
         status:,
         title:,
         gh_type:,

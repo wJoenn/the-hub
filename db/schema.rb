@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_05_063455) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_06_185359) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "github_comments", force: :cascade do |t|
     t.bigint "gid", null: false
     t.string "html_url", null: false
-    t.string "body", null: false
+    t.string "body", default: "", null: false
     t.boolean "read", default: false, null: false
     t.datetime "released_at", null: false
     t.bigint "author_id", null: false
@@ -31,7 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_05_063455) do
   create_table "github_issues", force: :cascade do |t|
     t.bigint "gid", null: false
     t.string "html_url", null: false
-    t.string "body", null: false
+    t.string "body", default: "", null: false
     t.string "status", null: false
     t.string "title", null: false
     t.string "gh_type", null: false

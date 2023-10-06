@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe Github::Comment do
   let!(:gid) { 1 }
-  let!(:body) { "An comment" }
   let!(:html_url) { "https://www.github.com" }
   let!(:released_at) { 1.day.ago }
 
@@ -24,11 +23,10 @@ RSpec.describe Github::Comment do
     it "validates the presence of all attributes" do
       expect(issue).to be_persisted
 
-      test_wrong_record(gid:, body:, html_url:, released_at:, issue:)
-      test_wrong_record(gid:, body:, html_url:, released_at:, author:)
-      test_wrong_record(gid:, body:, html_url:, issue:, author:)
-      test_wrong_record(gid:, body:, released_at:, issue:, author:)
-      test_wrong_record(gid:, html_url:, released_at:, issue:, author:)
+      test_wrong_record(gid:, html_url:, released_at:, issue:)
+      test_wrong_record(gid:, html_url:, released_at:, author:)
+      test_wrong_record(gid:, html_url:, issue:, author:)
+      test_wrong_record(gid:, released_at:, issue:, author:)
     end
 
     it "validates the booleanility of read" do
@@ -37,11 +35,11 @@ RSpec.describe Github::Comment do
       comment.update(read: true)
       expect(comment).to be_read
 
-      test_wrong_record(gid:, body:, html_url:, released_at: "a", issue:, author:, read: nil)
+      test_wrong_record(gid:, html_url:, released_at: "a", issue:, author:, read: nil)
     end
 
     it "validates the DateTime format of released_at" do
-      test_wrong_record(gid:, body:, html_url:, released_at: "a", issue:, author:)
+      test_wrong_record(gid:, html_url:, released_at: "a", issue:, author:)
     end
   end
 
