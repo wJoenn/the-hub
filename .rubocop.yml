@@ -47,17 +47,11 @@ RSpec/MultipleMemoizedHelpers:
 RSpec/NoExpectationExample:
   Enabled: false
 
-Style/ClassAndModuleChildren:
-  Enabled: false
 Style/ConditionalAssignment:
-  Enabled: false
+  EnforcedStyle: assign_inside_condition
 Style/Documentation:
   Enabled: false
 Style/FrozenStringLiteralComment:
-  Enabled: false
-Style/MissingRespondToMissing:
-  Enabled: false
-Style/MutableConstant:
   Enabled: false
 Style/RegexpLiteral:
   AllowInnerSlashes: true
