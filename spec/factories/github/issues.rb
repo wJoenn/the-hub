@@ -3,7 +3,7 @@ FactoryBot.define do
     gid { 1 }
     html_url { "https://www.github.com" }
     body { "An issue" }
-    status { "opened" }
+    state { "opened" }
     title { "I have an issue" }
     gh_type { "Issue" }
     number { 1 }

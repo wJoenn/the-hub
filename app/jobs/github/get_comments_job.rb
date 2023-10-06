@@ -34,7 +34,7 @@ module Github
         gid: issue.id,
         html_url: issue.html_url,
         body: @github.md_to_html(issue.body),
-        status: issue.state,
+        state: issue.state,
         title: issue.title,
         gh_type: issue_type(issue.html_url),
         number: issue.number,
