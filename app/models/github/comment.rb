@@ -9,6 +9,7 @@ module Github
 
     validates :html_url, :released_at, presence: true
     validates :read, inclusion: [true, false]
+    validates :feed_type, format: { with: /\AGithubComment\z/ }
     validate :released_at_is_a_datetime
 
     def released_at_is_a_datetime

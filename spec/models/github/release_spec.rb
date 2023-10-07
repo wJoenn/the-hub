@@ -46,6 +46,10 @@ RSpec.describe Github::Release do
       test_wrong_record(gid:, name:, tag_name:, html_url:, released_at:, repository:, author:, read: nil)
     end
 
+    it "validated that the feed_type cannot be changed" do
+      test_wrong_record(gid:, name:, tag_name:, html_url:, released_at:, repository:, author:, feed_type: "a")
+    end
+
     it "validates the DateTime format of released_date" do
       test_wrong_record(gid:, name:, tag_name:, html_url:, released_at: "a", repository:, author:)
     end

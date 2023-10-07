@@ -30,6 +30,7 @@ RSpec.describe Github::ReleasesController, type: :request do
         "html_url" => release.html_url,
         "released_at" => release.released_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ"),
         "read" => release.read?,
+        "feed_type" => "GithubRelease",
         "reactions" => [{
           "id" => reaction.id,
           "user_id" => reaction.github_user_id,

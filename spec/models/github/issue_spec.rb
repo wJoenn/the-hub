@@ -73,6 +73,21 @@ RSpec.describe Github::Issue do
       )
     end
 
+    it "validated that the feed_type cannot be changed" do
+      test_wrong_record(
+        gid:,
+        state:,
+        title:,
+        gh_type:,
+        number:,
+        html_url:,
+        released_at:,
+        repository:,
+        author:,
+        feed_type: "a"
+      )
+    end
+
     it "validates the DateTime format of released_at" do
       test_wrong_record(
         gid:,

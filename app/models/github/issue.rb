@@ -10,6 +10,7 @@ module Github
 
     validates :html_url, :state, :title, :gh_type, :number, :released_at, presence: true
     validates :number, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+    validates :feed_type, format: { with: /\AGithubIssue\z/ }
     validate :released_at_is_a_datetime
 
     def released_at_is_a_datetime

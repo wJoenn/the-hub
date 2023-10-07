@@ -43,6 +43,10 @@ RSpec.describe Github::Comment do
       test_wrong_record(gid:, html_url:, released_at: "a", issue:, author:, read: nil)
     end
 
+    it "validated that the feed_type cannot be changed" do
+      test_wrong_record(gid:, html_url:, released_at:, issue:, author:, feed_type: "a")
+    end
+
     it "validates the DateTime format of released_at" do
       test_wrong_record(gid:, html_url:, released_at: "a", issue:, author:)
     end

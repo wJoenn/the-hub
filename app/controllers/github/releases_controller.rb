@@ -30,6 +30,7 @@ module Github
           body: release.body,
           html_url: release.html_url,
           read: release.read?,
+          feed_type: release.feed_type,
           released_at: release.released_at,
           reactions: serialized_reactions(release),
           repository: serialized_repository(release.repository),

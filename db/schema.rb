@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_06_210610) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_07_185427) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,6 +24,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_06_210610) do
     t.bigint "issue_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "feed_type", default: "GithubComment", null: false
     t.index ["author_id"], name: "index_github_comments_on_author_id"
     t.index ["issue_id"], name: "index_github_comments_on_issue_id"
   end
@@ -41,6 +42,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_06_210610) do
     t.bigint "repository_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "feed_type", default: "GithubIssue", null: false
     t.index ["author_id"], name: "index_github_issues_on_author_id"
     t.index ["repository_id"], name: "index_github_issues_on_repository_id"
   end
@@ -68,6 +70,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_06_210610) do
     t.datetime "updated_at", null: false
     t.bigint "author_id", null: false
     t.string "html_url", null: false
+    t.string "feed_type", default: "GithubRelease", null: false
     t.index ["author_id"], name: "index_github_releases_on_author_id"
     t.index ["repository_id"], name: "index_github_releases_on_repository_id"
   end
