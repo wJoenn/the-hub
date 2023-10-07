@@ -12,6 +12,10 @@ module Github
     validates :feed_type, format: { with: /\AGithubComment\z/ }
     validate :released_at_is_a_datetime
 
+    def reactions
+      Github::Reaction.where(reactable_type: "Github::Comment", reactable_id: id)
+    end
+
     private
 
     def released_at_is_a_datetime

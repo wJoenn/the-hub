@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       resources :releases, only: %i[], concerns: :reactable
     end
 
+    resources :comments, only: %i[index]
     resources :releases, only: %i[index]
   end
 end
