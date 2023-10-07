@@ -8,7 +8,6 @@ module Github
         issue_number = issue_number_from_url(notification.subject.url)
         issue = @github.issue(github_repository, issue_number)
         update_issue(github_repository, issue)
-        # Github::GetCommentsJob.perform_now(notification_limit: 5, issue_comment_limit: 100; reaction_limit: 100)
       end
     end
 
