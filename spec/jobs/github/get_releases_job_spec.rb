@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Github
-  class GetResponse
+  class GetReleasesResponse
     attr_reader :body
 
     def initialize
@@ -72,7 +72,7 @@ RSpec.describe Github::GetReleasesJob do
     allow(client).to receive_messages(releases: [Release.new])
     allow(client).to receive_messages(user: User.new)
     allow(client).to receive_messages(markdown: "")
-    allow(HTTParty).to receive_messages(get: Github::GetResponse.new)
+    allow(HTTParty).to receive_messages(get: Github::GetReleasesResponse.new)
 
     described_class.perform_now({ reaction_limit: 1 })
     described_class.perform_now({ reaction_limit: 1 })

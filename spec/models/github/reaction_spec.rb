@@ -6,6 +6,7 @@ RSpec.describe Github::Reaction do
   let!(:content) { "+1" }
 
   let!(:comment_reaction) { create(:github_reaction, :with_comment) }
+  let!(:issue_reaction) { create(:github_reaction, :with_issue) }
   let!(:release_reaction) { create(:github_reaction, :with_release) }
   let!(:reactable) { release_reaction.reactable }
 
@@ -13,6 +14,10 @@ RSpec.describe Github::Reaction do
     context "with polymorphism" do
       it "can belong to a Github::Comment" do
         expect(comment_reaction.reactable).to be_a Github::Comment
+      end
+
+      it "can belong to a Github::Issue" do
+        expect(issue_reaction.reactable).to be_a Github::Issue
       end
 
       it "can belong to a Github::Release" do

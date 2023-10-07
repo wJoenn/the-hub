@@ -9,7 +9,8 @@ RSpec.describe Github::Issue do
   let!(:html_url) { "https://www.github.com" }
   let!(:released_at) { 1.day.ago }
 
-  let!(:issue) { create(:github_issue) }
+  let!(:reaction) { create(:github_reaction, :with_issue) }
+  let!(:issue) { reaction.reactable }
   let!(:repository) { issue.repository }
   let!(:author) { issue.author }
 
@@ -17,6 +18,10 @@ RSpec.describe Github::Issue do
     it "has many Github::Comment" do
       create(:github_comment, issue:)
       expect(issue.comments).to all be_a Github::Comment
+    end
+
+    it "has many Github::Reaction" do
+      expect(issue.reactions).to all be_a Github::Reaction
     end
 
     it "belongs to a Github::Repository" do

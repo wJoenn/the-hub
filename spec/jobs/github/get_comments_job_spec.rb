@@ -1,12 +1,12 @@
 require "rails_helper"
 
 module Github
-  class GetResponse
+  class GetCommentsResponse
     attr_reader :body
 
-    def initialize
+    def initialize(id)
       @body = [{
-        "id" => 1,
+        "id" => id,
         "user" => {
           "id" => 1
         },
@@ -107,7 +107,19 @@ RSpec.describe Github::GetCommentsJob do
     allow(client).to receive_messages(user: User.new)
     allow(client).to receive_messages(issue_comments: [Comment.new])
     allow(client).to receive_messages(markdown: "")
-    allow(HTTParty).to receive_messages(get: Github::GetResponse.new)
+
+    comment_reactions_uri = URI("https://api.github.com/repos/a/issues/comments/1/reactions?per_page=1&page=1")
+    issue_reactions_uri = URI("https://api.github.com/repos/a/issues/1/reactions?per_page=1&page=1")
+    headers = {
+      headers: {
+        "Accept" => "application/vnd.github+json",
+        "Authorization" => "Bearer #{Rails.application.credentials.github_token}",
+        "X-GitHub-Api-Version" => "2022-11-28"
+      }
+    }
+
+    allow(HTTParty).to receive(:get).with(comment_reactions_uri, headers).and_return(Github::GetCommentsResponse.new(1))
+    allow(HTTParty).to receive(:get).with(issue_reactions_uri, headers).and_return(Github::GetCommentsResponse.new(2))
 
     described_class.perform_now
     described_class.perform_now
@@ -130,6 +142,6 @@ RSpec.describe Github::GetCommentsJob do
   end
 
   it "finds or create new Github::Reaction" do
-    expect(Github::Reaction.count).to eq 1
+    expect(Github::Reaction.count).to eq 2
   end
 end

@@ -8,6 +8,10 @@ FactoryBot.define do
       reactable { association :github_comment }
     end
 
+    trait :with_issue do
+      reactable { association :github_issue }
+    end
+
     trait :with_release do
       reactable { association :github_release }
     end
