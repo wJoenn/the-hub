@@ -12,6 +12,8 @@ module Github
     validates :starred, inclusion: [true, false]
     validate :pushed_at_is_a_datetime
 
+    private
+
     def pushed_at_is_a_datetime
       errors.add(:pushed_at, "must be a valid date") unless pushed_at.is_a? ActiveSupport::TimeWithZone
     end
