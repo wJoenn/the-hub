@@ -5,11 +5,16 @@ RSpec.describe Github::Comment do
   let!(:html_url) { "https://www.github.com" }
   let!(:released_at) { 1.day.ago }
 
-  let!(:comment) { create(:github_comment) }
+  let!(:reaction) { create(:github_reaction, :with_comment) }
+  let!(:comment) { reaction.reactable }
   let!(:issue) { comment.issue }
   let!(:author) { comment.author }
 
   describe "associations" do
+    it "has many Github::Reaction" do
+      expect(comment.reactions).to all be_a Github::Reaction
+    end
+
     it "belongs to a Github::Issue" do
       expect(comment.issue).to be_a Github::Issue
     end

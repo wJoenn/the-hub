@@ -7,12 +7,17 @@ RSpec.describe Github::Release do
   let!(:html_url) { "https://www.github.com" }
   let!(:released_at) { 1.day.ago }
 
+  let!(:reaction) { create(:github_reaction, :with_release) }
   let!(:release_one) { create(:github_release, read: true) }
-  let!(:release_two) { create(:github_release) }
+  let!(:release_two) { reaction.reactable }
   let!(:author) { release_one.author }
   let!(:repository) { release_one.repository }
 
   describe "associations" do
+    it "has many Github::Reaction" do
+      expect(release_two.reactions).to all be_a Github::Reaction
+    end
+
     it "belongs to a Github::Repository" do
       expect(release_one.repository).to be_a Github::Repository
     end

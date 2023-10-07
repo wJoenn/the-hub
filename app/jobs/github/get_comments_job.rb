@@ -8,7 +8,7 @@ module Github
         issue_number = issue_number_from_url(notification.subject.url)
         issue = @github.issue(github_repository, issue_number)
         update_issue(github_repository, issue)
-        # Github::GetCommentsJob.perform_now(notification_limit: 5, issue_comment_limit: 100)
+        # Github::GetCommentsJob.perform_now(notification_limit: 5, issue_comment_limit: 100; reaction_limit: 100)
       end
     end
 
@@ -54,11 +54,16 @@ module Github
       url.match?(/\/issues\/\d+$/) ? "Issue" : "PullRequest"
     end
 
-    def update_issue(github_repository, issue)
-      github_issue = find_or_create_issue(github_repository, issue)
-      @github.issue_comments(github_repository, github_issue).each do |comment|
-        find_or_create_comment(github_issue, comment)
+    def update_comment(issue, comment)
+      github_comment = find_or_create_comment(issue, comment)
+      @github.issue_comment_reactions(issue.repository, github_comment).each do |reaction|
+        find_or_create_reaction(github_comment, reaction)
       end
+    end
+
+    def update_issue(repository, issue)
+      github_issue = find_or_create_issue(repository, issue)
+      @github.issue_comments(repository, github_issue).each { |comment| update_comment(github_issue, comment) }
     end
   end
 end

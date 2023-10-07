@@ -1,5 +1,21 @@
 require "rails_helper"
 
+module Github
+  class GetResponse
+    attr_reader :body
+
+    def initialize
+      @body = [{
+        "id" => 1,
+        "user" => {
+          "id" => 1
+        },
+        "content" => "+1"
+      }].to_json
+    end
+  end
+end
+
 class Comment
   attr_reader :id, :body, :html_url, :created_at, :user, :issue
 
@@ -91,6 +107,7 @@ RSpec.describe Github::GetCommentsJob do
     allow(client).to receive_messages(user: User.new)
     allow(client).to receive_messages(issue_comments: [Comment.new])
     allow(client).to receive_messages(markdown: "")
+    allow(HTTParty).to receive_messages(get: Github::GetResponse.new)
 
     described_class.perform_now
     described_class.perform_now
@@ -110,5 +127,9 @@ RSpec.describe Github::GetCommentsJob do
 
   it "finds or create new Github::Comment" do
     expect(Github::Comment.count).to eq 1
+  end
+
+  it "finds or create new Github::Reaction" do
+    expect(Github::Reaction.count).to eq 1
   end
 end

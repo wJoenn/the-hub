@@ -2,6 +2,8 @@ module Github
   class Comment < ApplicationRecord
     include IsGithubModel
 
+    has_many :reactions, class_name: "Github::Reaction", inverse_of: :reactable, dependent: :destroy
+
     belongs_to :author, class_name: "Github::User"
     belongs_to :issue, class_name: "Github::Issue"
 

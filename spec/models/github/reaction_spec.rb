@@ -5,18 +5,25 @@ RSpec.describe Github::Reaction do
   let!(:github_user_id) { 1 }
   let!(:content) { "+1" }
 
-  let!(:reaction) { create(:github_reaction, :with_release) }
-  let!(:reactable) { reaction.reactable }
+  let!(:comment_reaction) { create(:github_reaction, :with_comment) }
+  let!(:release_reaction) { create(:github_reaction, :with_release) }
+  let!(:reactable) { release_reaction.reactable }
 
   describe "associations" do
-    it "belongs to a Github::Release" do
-      expect(reaction.reactable).to be_a Github::Release
+    context "with polymorphism" do
+      it "can belong to a Github::Comment" do
+        expect(comment_reaction.reactable).to be_a Github::Comment
+      end
+
+      it "can belong to a Github::Release" do
+        expect(release_reaction.reactable).to be_a Github::Release
+      end
     end
   end
 
   describe "validations" do
     it "validates the presence of all attributes" do
-      expect(reaction).to be_persisted
+      expect(release_reaction).to be_persisted
 
       test_wrong_record(gid:, github_user_id:, content:)
       test_wrong_record(gid:, github_user_id:, reactable:)

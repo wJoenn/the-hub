@@ -27,7 +27,7 @@ module Github
     def update_release(repository, release)
       github_release = find_or_create_release(repository, release)
 
-      @github.reactions(repository, github_release).each do |reaction|
+      @github.release_reactions(repository, github_release).each do |reaction|
         find_or_create_reaction(github_release, reaction)
       end
     end

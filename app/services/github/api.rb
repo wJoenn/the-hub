@@ -40,6 +40,17 @@ module Github
       @client.issue_comments(repository.full_name, issue.number)
     end
 
+    def issue_comment_reactions(repository, comment, page = 1)
+      query = "?per_page=#{@reaction_limit}&page=#{page}"
+      uri = URI("#{@base_url}/repos/#{repository.full_name}/issues/comments/#{comment.gid}/reactions#{query}")
+
+      response = HTTParty.get(uri, headers: @headers)
+
+      reactions = JSON.parse(response.body)
+      reactions.concat(reactions(repository, release, page + 1)) if reactions.length == 100 * page
+      reactions
+    end
+
     def md_to_html(markdown)
       return "" unless markdown
 
@@ -51,7 +62,7 @@ module Github
       @client.notifications(all: true)
     end
 
-    def reactions(repository, release, page = 1)
+    def release_reactions(repository, release, page = 1)
       query = "?per_page=#{@reaction_limit}&page=#{page}"
       uri = URI("#{@base_url}/repos/#{repository.full_name}/releases/#{release.gid}/reactions#{query}")
 
