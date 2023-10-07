@@ -65,7 +65,7 @@ module Github
     def update_issue(repository, issue)
       github_issue = find_or_create_issue(repository, issue)
 
-      reactions_path = "/repos/#{issue.repository.full_name}/issues/#{github_issue.number}/reactions"
+      reactions_path = "/repos/#{repository.full_name}/issues/#{github_issue.number}/reactions"
       @github.reactions(reactions_path).each do |reaction|
         find_or_create_reaction(github_issue, reaction)
       end
