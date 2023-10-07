@@ -27,7 +27,8 @@ module Github
     def update_release(repository, release)
       github_release = find_or_create_release(repository, release)
 
-      @github.release_reactions(repository, github_release).each do |reaction|
+      reactions_path = "/repos/#{repository.full_name}/releases/#{github_release.gid}/reactions"
+      @github.reactions(reactions_path).each do |reaction|
         find_or_create_reaction(github_release, reaction)
       end
     end

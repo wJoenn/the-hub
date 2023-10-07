@@ -56,7 +56,8 @@ module Github
 
     def update_comment(issue, comment)
       github_comment = find_or_create_comment(issue, comment)
-      @github.issue_comment_reactions(issue.repository, github_comment).each do |reaction|
+      reactions_path = "/repos/#{issue.repository.full_name}/issues/comments/#{github_comment.gid}/reactions"
+      @github.reactions(reactions_path).each do |reaction|
         find_or_create_reaction(github_comment, reaction)
       end
     end
