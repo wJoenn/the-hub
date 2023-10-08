@@ -3,7 +3,7 @@ module Github
     include IsGithubModel
 
     has_many :comments, class_name: "Github::Comment", inverse_of: :issue, dependent: :destroy
-    has_many :reactions, class_name: "Github::Reaction", inverse_of: :reactable, dependent: :destroy
+    has_many :reactions, class_name: "Github::Reaction", as: :reactable, dependent: :destroy
 
     belongs_to :author, class_name: "Github::User"
     belongs_to :repository, class_name: "Github::Repository"
@@ -12,10 +12,6 @@ module Github
     validates :number, numericality: { greater_than_or_equal_to: 0, only_integer: true }
     validates :feed_type, format: { with: /\AGithubIssue\z/ }
     validate :released_at_is_a_datetime
-
-    def reactions
-      Github::Reaction.where(reactable_type: "Github::Issue", reactable_id: id)
-    end
 
     private
 
