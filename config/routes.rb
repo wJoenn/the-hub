@@ -16,4 +16,6 @@ Rails.application.routes.draw do
     resources :comments, only: %i[index]
     resources :releases, only: %i[index]
   end
+
+  resources :feed_items, only: %i[index]
 end

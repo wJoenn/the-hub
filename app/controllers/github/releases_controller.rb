@@ -1,7 +1,7 @@
 module Github
   class ReleasesController < Github::ApplicationController
     def index
-      render json: { releases: serialized_releases }, status: :ok
+      render json: { releases: serialized_releases(queried_releases) }, status: :ok
     end
 
     private
@@ -10,8 +10,8 @@ module Github
       Github::Release.includes(:author, repository: :owner).order(released_at: :desc).limit(30)
     end
 
-    def serialized_releases
-      queried_releases.map do |release|
+    def serialized_releases(releases)
+      releases.map do |release|
         {
           id: release.gid,
           name: release.name,

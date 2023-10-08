@@ -1,10 +1,11 @@
 require "rails_helper"
 
 RSpec.describe Github::CommentsController, type: :request do
-  let!(:reaction) { create(:github_reaction, :with_comment) }
-  let!(:comment) { reaction.reactable }
+  let!(:issue_reaction) { create(:github_reaction, :with_issue) }
+  let!(:issue) { issue_reaction.reactable }
+  let!(:comment_reaction) { create(:github_reaction, reactable: create(:github_comment, issue:)) }
+  let!(:comment) { comment_reaction.reactable }
   let!(:comment_author) { comment.author }
-  let!(:issue) { comment.issue }
   let!(:issue_author) { issue.author }
   let!(:repository) { issue.repository }
   let!(:owner) { repository.owner }
@@ -32,10 +33,10 @@ RSpec.describe Github::CommentsController, type: :request do
         "read" => comment.read?,
         "feed_type" => "GithubComment",
         "reactions" => [{
-          "id" => reaction.id,
-          "user_id" => reaction.github_user_id,
-          "content" => reaction.content,
-          "reactable_type" => reaction.reactable_type
+          "id" => comment_reaction.id,
+          "user_id" => comment_reaction.github_user_id,
+          "content" => comment_reaction.content,
+          "reactable_type" => comment_reaction.reactable_type
         }],
         "author" => {
           "id" => comment_author.gid,
@@ -57,7 +58,12 @@ RSpec.describe Github::CommentsController, type: :request do
           "number" => issue.number,
           "feed_type" => "GithubIssue",
           "released_at" => issue.released_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ"),
-          "reactions" => [],
+          "reactions" => [{
+            "id" => issue_reaction.id,
+            "user_id" => issue_reaction.github_user_id,
+            "content" => issue_reaction.content,
+            "reactable_type" => issue_reaction.reactable_type
+          }],
           "author" => {
             "id" => issue_author.gid,
             "login" => issue_author.login,

@@ -1,20 +1,20 @@
 module Github
   class CommentsController < ApplicationController
     def index
-      render json: { comments: serialized_comments }, status: :ok
+      render json: { comments: serialized_comments(queried_comments) }, status: :ok
     end
 
     private
 
-    def queried_releases
+    def queried_comments
       Github::Comment
         .includes(:author, issue: [:author, { repository: :owner }])
         .order(released_at: :desc)
         .limit(30)
     end
 
-    def serialized_comments
-      queried_releases.map do |comment|
+    def serialized_comments(comments)
+      comments.map do |comment|
         {
           id: comment.gid,
           body: comment.body,
