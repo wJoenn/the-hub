@@ -8,7 +8,7 @@ module Github
       @release_limit = args[:release_limit] || 1
       @notification_limit = args[:notification_limit] || 1
       @reaction_limit = args[:reaction_limit] || 1
-      @issue_comment_limit = args[:issue_comment] || 1
+      @issue_comment_limit = args[:issue_comment_limit] || 1
 
       @base_url = "https://api.github.com"
       @headers = {
