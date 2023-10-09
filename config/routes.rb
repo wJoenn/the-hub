@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   namespace :github do
     resources :repositories, only: %i[] do
+      resources :comments, only: %i[], concerns: :reactable
+      resources :issues, only: %i[], concerns: :reactable
       resources :releases, only: %i[], concerns: :reactable
     end
 

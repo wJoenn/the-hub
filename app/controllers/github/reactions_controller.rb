@@ -1,6 +1,6 @@
 module Github
   class ReactionsController < ApplicationController
-    before_action :set_release, :set_repository, only: %i[create destroy]
+    before_action :set_reactable, :set_repository, only: %i[create destroy]
 
     def create
       reaction_params = params.require(:reaction).permit(:content)
@@ -8,10 +8,10 @@ module Github
         gid: 0,
         github_user_id: 75_388_869,
         content: reaction_params[:content],
-        reactable: @release
+        reactable: @reactable
       )
 
-      Github::CreateReleaseReactionJob.perform_later(@repository, @release, reaction)
+      Github::CreateReactionJob.perform_later(@repository, @reactable, reaction)
 
       render json: serialized_reaction(reaction), status: :created
     rescue ActiveRecord::RecordInvalid
@@ -23,15 +23,18 @@ module Github
       gid = reaction.gid
       reaction.destroy!
 
-      Github::DestroyReleaseReactionJob.perform_later(@repository, @release, gid)
+      Github::DestroyReactionJob.perform_later(@repository, @reactable, gid)
 
       render :json, status: :ok
     end
 
     private
 
-    def set_release
-      @release = Github::Release.by_gid(params[:release_id])
+    def set_reactable
+      return @reactable = Github::Comment.by_gid(params[:comment_id]) if params[:comment_id]
+      return @reactable = Github::Issue.by_gid(params[:issue_id]) if params[:issue_id]
+
+      @reactable = Github::Release.by_gid(params[:release_id])
     end
 
     def set_repository

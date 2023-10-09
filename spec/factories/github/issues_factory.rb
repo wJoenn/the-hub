@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :github_issue, class: "Github::Issue" do
-    gid { 1 }
+    gid { 1000 }
     html_url { "https://www.github.com" }
     body { "An issue" }
     state { "opened" }

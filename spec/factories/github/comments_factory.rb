@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :github_comment, class: "Github::Comment" do
-    gid { 1 }
+    gid { 1000 }
     html_url { "https://www.github.com" }
     body { "A comment" }
     released_at { 1.day.ago }

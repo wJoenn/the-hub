@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :github_user, class: "Github::User" do
-    gid { 1 }
+    gid { 1000 }
     login { "wJoenn" }
     gh_type { "User" }
     avatar_url { "wJoenn/avatar" }

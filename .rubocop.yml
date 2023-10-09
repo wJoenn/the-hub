@@ -23,6 +23,8 @@ AllCops:
 Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
 
+Lint/LiteralAsCondition:
+  Enabled: false
 Lint/MissingSuper:
   Enabled: false
 

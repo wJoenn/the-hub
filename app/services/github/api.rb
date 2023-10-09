@@ -18,15 +18,15 @@ module Github
       }
     end
 
-    def create_release_reaction(repository, release, reaction)
-      uri = URI("#{@base_url}/repos/#{repository.full_name}/releases/#{release.gid}/reactions")
+    def create_reaction(repository, reactable_path, reaction)
+      uri = URI("#{@base_url}/repos/#{repository.full_name}/#{reactable_path}/reactions")
       body = { content: reaction.content }.to_json
 
       HTTParty.post(uri, body:, headers: @headers)
     end
 
-    def delete_release_reaction(repository, release, reaction_gid)
-      uri = URI("#{@base_url}/repos/#{repository.full_name}/releases/#{release.gid}/reactions/#{reaction_gid}")
+    def delete_reaction(repository, reactable_path, reaction_gid)
+      uri = URI("#{@base_url}/repos/#{repository.full_name}/#{reactable_path}/reactions/#{reaction_gid}")
 
       HTTParty.delete(uri, headers: @headers)
     end

@@ -43,5 +43,13 @@ module Github
 
       github_repository
     end
+
+    def reactable_path
+      case @reactable.class.to_s
+      when "Github::Comment" then "issues/comments/#{@reactable.gid}"
+      when "Github::Issue" then "issues/#{@reactable.number}"
+      when "Github::Release" then "releases/#{@reactable.gid}"
+      end
+    end
   end
 end

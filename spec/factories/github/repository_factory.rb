@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :github_repository, class: "Github::Repository" do
-    gid { 1 }
+    gid { 1000 }
     full_name { "wJoenn/TheHub" }
     name { "wJoenn" }
     description { "A repo" }

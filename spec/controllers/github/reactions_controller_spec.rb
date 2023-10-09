@@ -1,23 +1,30 @@
 require "rails_helper"
 
 RSpec.describe Github::ReactionsController, type: :request do
-  let!(:repository) { create(:github_repository) }
+  let!(:comment) { create(:github_comment) }
+  let!(:issue) { comment.issue }
   let!(:release) { create(:github_release) }
-  let!(:content) { "eyes" }
+  let!(:repository) { create(:github_repository) }
+  let!(:params) { { reaction: { content: "eyes" } } }
 
   describe "GET /create" do
-    before do
-      post "/github/repositories/#{repository.gid}/releases/#{release.gid}/reactions",
-        params: {
-          reaction: { content: }
-        }
+    it "creates a new reaction for a Github::Comment" do
+      post("/github/repositories/#{repository.gid}/comments/#{comment.gid}/reactions", params:)
+      expect(comment.reactions.count).to eq 1
     end
 
-    it "creates a new GithubReaction" do
-      expect(Github::Reaction.count).to eq 1
+    it "creates a new reaction for a Github::Issue" do
+      post("/github/repositories/#{repository.gid}/issues/#{issue.gid}/reactions", params:)
+      expect(issue.reactions.count).to eq 1
+    end
+
+    it "creates a new reaction for a Github::Release" do
+      post("/github/repositories/#{repository.gid}/releases/#{release.gid}/reactions", params:)
+      expect(release.reactions.count).to eq 1
     end
 
     it "returns a http status of 201" do
+      post("/github/repositories/#{repository.gid}/comments/#{comment.gid}/reactions", params:)
       expect(response).to have_http_status :created
     end
 
@@ -32,15 +39,25 @@ RSpec.describe Github::ReactionsController, type: :request do
   end
 
   describe "GET /destroy" do
-    let!(:reaction) { Github::Reaction.create!(gid: 1, github_user_id: 1, content: "+1", reactable: release) }
+    let!(:comment_reaction) { create(:github_reaction, :with_comment) }
+    let!(:issue_reaction) { create(:github_reaction, :with_issue) }
+    let!(:release_reaction) { create(:github_reaction, :with_release) }
 
-    before do
-      uri = "/github/repositories/#{repository.gid}/releases/#{release.gid}/reactions/#{reaction.id}"
-      delete uri
+    it "destroys a Github::comment reaction" do
+      delete "/github/repositories/#{repository.gid}/comments/#{comment.gid}/reactions/#{comment_reaction.id}"
+      expect(Github::Reaction.where(id: comment_reaction.id)).to be_empty
+      expect(response).to have_http_status :ok
     end
 
-    it "destroys a GithubReaction" do
-      expect(Github::Reaction.where(id: reaction.id)).to be_empty
+    it "destroys a Github::Issue reaction" do
+      delete "/github/repositories/#{repository.gid}/issues/#{issue.gid}/reactions/#{issue_reaction.id}"
+      expect(Github::Reaction.where(id: issue_reaction.id)).to be_empty
+      expect(response).to have_http_status :ok
+    end
+
+    it "destroys a Github::Release reaction" do
+      delete "/github/repositories/#{repository.gid}/releases/#{release.gid}/reactions/#{release_reaction.id}"
+      expect(Github::Reaction.where(id: release_reaction.id)).to be_empty
       expect(response).to have_http_status :ok
     end
   end
