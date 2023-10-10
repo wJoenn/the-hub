@@ -15,14 +15,18 @@ module Github
 
     def find_or_create_comment(issue, comment)
       github_comment = Github::Comment.find_or_initialize_by(gid: comment.id)
-      github_comment.update!(
-        gid: comment.id,
-        html_url: comment.html_url,
-        body: @github.md_to_html(comment.body),
-        released_at: comment.created_at,
-        author: find_or_create_user(@github.user(comment.user.login)),
-        issue:
-      )
+      unless github_comment.persisted?
+        github_comment.update!(
+          gid: comment.id,
+          html_url: comment.html_url,
+          body: @github.md_to_html(comment.body),
+          released_at: comment.created_at,
+          author: find_or_create_user(@github.user(comment.user.login)),
+          issue:
+        )
+
+        github_comment.create_feed_item(released_at: github_comment.released_at)
+      end
 
       github_comment
     end

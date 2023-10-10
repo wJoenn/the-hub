@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_10_193310) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_10_212506) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "feed_items", force: :cascade do |t|
+    t.datetime "released_at", null: false
+    t.string "itemable_type"
+    t.bigint "itemable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["itemable_type", "itemable_id"], name: "index_feed_items_on_itemable"
+    t.index ["released_at"], name: "index_feed_items_on_released_at"
+  end
 
   create_table "github_comments", force: :cascade do |t|
     t.bigint "gid", null: false

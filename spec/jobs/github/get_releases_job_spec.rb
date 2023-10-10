@@ -93,4 +93,8 @@ RSpec.describe Github::GetReleasesJob do
   it "finds or create new Github::Reaction" do
     expect(Github::Reaction.count).to eq 1
   end
+
+  it "creates a new FeedItem" do
+    expect(FeedItem.count).to eq 1
+  end
 end

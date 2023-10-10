@@ -13,7 +13,14 @@ RSpec.describe Github::Release do
   let!(:author) { release_one.author }
   let!(:repository) { release_one.repository }
 
+  let!(:feed_item) { create(:feed_item, :with_release) }
+  let!(:itemable_release) { feed_item.itemable }
+
   describe "associations" do
+    it "has one FeedItem" do
+      expect(itemable_release.feed_item).to be_a FeedItem
+    end
+
     it "has many Github::Reaction" do
       expect(release_two.reactions).to all be_a Github::Reaction
     end

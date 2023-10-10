@@ -19,6 +19,8 @@ module Github
           repository:,
           author: find_or_create_user(@github.user(release.author.login))
         )
+
+        github_release.create_feed_item(released_at: github_release.released_at)
       end
 
       github_release
