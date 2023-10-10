@@ -45,9 +45,9 @@ gem "octokit", "~> 7.2.0"
 # A multithreaded, Postgres-based, ActiveJob backend [https://github.com/bensheldon/good_job#set-up]
 gem "good_job", "~> 3.19.4"
 
-gem "sentry-ruby", "~> 5.11"
+gem "sentry-ruby", "~> 5.12.0"
 
-gem "sentry-rails", "~> 5.11"
+gem "sentry-rails", "~> 5.12.0"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
