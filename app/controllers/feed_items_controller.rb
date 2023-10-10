@@ -1,15 +1,13 @@
 class FeedItemsController < ApplicationController
   def index
+    @page = params[:page].nil? ? 0 : params[:page].to_i - 1
     render json: { feed_items: serialized_feed_items(queried_feed_items) }, status: :ok
   end
 
   private
 
   def queried_feed_items
-    github_comments = Github::CommentsController.new.send(:queried_comments)
-    github_releases = Github::ReleasesController.new.send(:queried_releases)
-
-    (github_comments + github_releases).sort_by(&:released_at).last(30).reverse
+    FeedItem.includes(:itemable).order(released_at: :desc).limit(10).offset(10 * @page).map(&:itemable)
   end
 
   def serialized_feed_items(items)

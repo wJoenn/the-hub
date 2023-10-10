@@ -50,7 +50,7 @@ RSpec/NoExpectationExample:
   Enabled: false
 
 Style/ConditionalAssignment:
-  EnforcedStyle: assign_inside_condition
+  Enabled: false
 Style/Documentation:
   Enabled: false
 Style/FrozenStringLiteralComment:

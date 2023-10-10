@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe FeedItemsController, type: :request do
   describe "GET /index" do
     before do
-      create(:github_comment)
-      create(:github_release)
+      create(:feed_item, :with_comment)
+      create(:feed_item, :with_release)
       get "/feed_items"
     end
 
