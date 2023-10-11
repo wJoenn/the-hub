@@ -1,9 +1,10 @@
 require "rails_helper"
 
 RSpec.describe FeedItem do
-  let!(:itemable) { create(:github_comment) }
-  let!(:comment_feed_item) { create(:feed_item, :with_comment) }
-  let!(:release_feed_item) { create(:feed_item, :with_release) }
+  let!(:comment) { create(:github_comment) }
+  let!(:comment_feed_item) { comment.feed_item }
+  let!(:release) { create(:github_release) }
+  let!(:release_feed_item) { release.feed_item }
 
   describe "associations" do
     context "with polymorphism" do
@@ -21,11 +22,11 @@ RSpec.describe FeedItem do
     it "validates the presence of all attributes" do
       expect(comment_feed_item).to be_persisted
 
-      test_wrong_record(itemable:)
+      test_wrong_record(itemable: comment)
     end
 
     it "validates the DateTime format of released_date" do
-      test_wrong_record(released_at: "a", itemable:)
+      test_wrong_record(released_at: "a", itemable: comment)
     end
   end
 

@@ -10,12 +10,9 @@ RSpec.describe Github::Comment do
   let!(:issue) { comment.issue }
   let!(:author) { comment.author }
 
-  let!(:feed_item) { create(:feed_item, :with_comment) }
-  let!(:itemable_comment) { feed_item.itemable }
-
   describe "associations" do
     it "has one FeedItem" do
-      expect(itemable_comment.feed_item).to be_a FeedItem
+      expect(comment.feed_item).to be_a FeedItem
     end
 
     it "has many Github::Reaction" do

@@ -24,8 +24,6 @@ module Github
           author: find_or_create_user(@github.user(comment.user.login)),
           issue:
         )
-
-        github_comment.create_feed_item(released_at: github_comment.released_at)
       end
 
       github_comment

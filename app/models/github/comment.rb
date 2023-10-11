@@ -1,8 +1,7 @@
 module Github
   class Comment < ApplicationRecord
+    include IsFeedItem
     include IsGithubModel
-
-    has_one :feed_item, class_name: "FeedItem", as: :itemable, dependent: :destroy
 
     has_many :reactions, class_name: "Github::Reaction", as: :reactable, dependent: :destroy
 
