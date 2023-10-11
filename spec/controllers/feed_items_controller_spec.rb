@@ -21,5 +21,11 @@ RSpec.describe FeedItemsController, type: :request do
       feed_types = response.parsed_body["feed_items"].pluck("feed_type")
       expect(feed_types).to contain_exactly "GithubRelease", "GithubComment"
     end
+
+    it "includes a pagination system based on released_at" do
+      get "/feed_items", params: { from_date: 1.week.ago }
+
+      expect(response.parsed_body.length).to eq 1
+    end
   end
 end

@@ -14,10 +14,6 @@ RSpec.describe Github::Release do
   let!(:repository) { release_one.repository }
 
   describe "associations" do
-    it "has one FeedItem" do
-      expect(release_one.feed_item).to be_a FeedItem
-    end
-
     it "has many Github::Reaction" do
       expect(release_two.reactions).to all be_a Github::Reaction
     end

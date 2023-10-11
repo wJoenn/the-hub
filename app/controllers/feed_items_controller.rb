@@ -1,13 +1,25 @@
 class FeedItemsController < ApplicationController
   def index
-    @page = params[:page].nil? ? 0 : params[:page].to_i - 1
+    @from_date = params[:from_date].nil? ? Time.current : params[:from_date].to_datetime
     render json: { feed_items: serialized_feed_items(queried_feed_items) }, status: :ok
   end
 
   private
 
   def queried_feed_items
-    FeedItem.includes(:itemable).order(released_at: :desc).limit(10).offset(10 * @page).map(&:itemable)
+    github_comments = Github::Comment
+      .includes(:author, :reactions, issue: [:author, :reactions, { repository: :owner }])
+      .where("released_at < ?", @from_date)
+      .order(released_at: :desc)
+      .limit(10)
+
+    github_releases = Github::Release
+      .includes(:author, :reactions, repository: :owner)
+      .where("released_at < ?", @from_date)
+      .order(released_at: :desc)
+      .limit(10)
+
+    (github_comments + github_releases).sort_by(&:released_at).last(10).reverse
   end
 
   def serialized_feed_items(items)

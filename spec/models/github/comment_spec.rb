@@ -11,10 +11,6 @@ RSpec.describe Github::Comment do
   let!(:author) { comment.author }
 
   describe "associations" do
-    it "has one FeedItem" do
-      expect(comment.feed_item).to be_a FeedItem
-    end
-
     it "has many Github::Reaction" do
       expect(comment.reactions).to all be_a Github::Reaction
     end
