@@ -19,6 +19,7 @@ AllCops:
     - "tmp/**/*"
     - "test/**/*"
     - "vendor/**/*"
+    - "**/_*"
 
 Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
