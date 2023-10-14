@@ -9,7 +9,9 @@ class FeedItemsController < ApplicationController
   def queried_feed_items
     github_comments = Github::Comment
       .includes(:author, :reactions, issue: [:author, :reactions, { repository: :owner }])
-      .where("released_at < ?", @from_date)
+      .joins(:author)
+      .where("github_comments.released_at < ?", @from_date)
+      .where.not(author: { gid: Rails.application.credentials.github_user_id })
       .order(released_at: :desc)
       .limit(10)
 
