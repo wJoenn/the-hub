@@ -6,7 +6,7 @@ module Github
       reaction_params = params.require(:reaction).permit(:content)
       reaction = Github::Reaction.create!(
         gid: 0,
-        github_user_id: 75_388_869,
+        github_user_id: Rails.application.credentials.github_user_id,
         content: reaction_params[:content],
         reactable: @reactable
       )

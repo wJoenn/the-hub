@@ -3,6 +3,8 @@ on:
   pull_request:
   push:
     branches: [master]
+env:
+  RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 jobs:
   rspec:
     name: RSpec

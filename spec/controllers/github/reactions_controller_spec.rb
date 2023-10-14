@@ -23,6 +23,11 @@ RSpec.describe Github::ReactionsController, type: :request do
       expect(release.reactions.count).to eq 1
     end
 
+    it "creates a new reaction by me" do
+      post("/github/repositories/#{repository.gid}/releases/#{release.gid}/reactions", params:)
+      expect(release.reactions.first.github_user_id).to eq Rails.application.credentials.github_user_id
+    end
+
     it "returns a http status of 201" do
       post("/github/repositories/#{repository.gid}/comments/#{comment.gid}/reactions", params:)
       expect(response).to have_http_status :created

@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :github_reaction, class: "Github::Reaction" do
     gid { 1000 }
-    github_user_id { 75_388_869 }
+    github_user_id { Rails.application.credentials.github_user_id }
     content { "+1" }
 
     trait :with_comment do
