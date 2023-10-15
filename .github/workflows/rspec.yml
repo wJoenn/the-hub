@@ -1,4 +1,4 @@
-name: Testing/RSpec
+name: Testing
 on:
   pull_request:
   push:

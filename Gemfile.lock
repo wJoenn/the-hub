@@ -82,6 +82,7 @@ GEM
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
+    colorize (0.8.1)
     concurrent-ruby (1.2.2)
     connection_pool (2.4.1)
     crass (1.0.6)
@@ -112,6 +113,9 @@ GEM
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.2)
+    fasterer (0.10.1)
+      colorize (~> 0.7)
+      ruby_parser (>= 3.19.1)
     fugit (1.8.1)
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
@@ -271,6 +275,8 @@ GEM
       rubocop-factory_bot (~> 2.22)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
+    ruby_parser (3.20.3)
+      sexp_processor (~> 4.16)
     sawyer (0.9.2)
       addressable (>= 2.3.5)
       faraday (>= 0.17.3, < 3)
@@ -279,6 +285,7 @@ GEM
       sentry-ruby (~> 5.12.0)
     sentry-ruby (5.12.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
+    sexp_processor (4.17.0)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -306,6 +313,7 @@ DEPENDENCIES
   dockerfile-rails (>= 1.5)
   dotenv-rails
   factory_bot_rails
+  fasterer (~> 0.10.1)
   good_job (~> 3.19.4)
   httparty
   octokit (~> 7.2.0)
