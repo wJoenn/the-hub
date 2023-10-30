@@ -60,7 +60,7 @@ group :development, :test do
 
   gem "rubocop", "~> 1.57.2", require: false
   gem "rubocop-performance", require: false
-  gem "rubocop-rails", "~> 2.22.0", require: false
+  gem "rubocop-rails", "~> 2.22.1", require: false
   gem "rubocop-rspec", require: false
 
   gem 'fasterer', '~> 0.10.1'
