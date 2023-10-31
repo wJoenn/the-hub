@@ -40,7 +40,7 @@ gem "rack-cors"
 gem "httparty"
 
 # Github rest api fetcher [https://github.com/octokit/octokit.rb]
-gem "octokit", "~> 7.2.0"
+gem "octokit", "~> 8.0.0"
 
 # A multithreaded, Postgres-based, ActiveJob backend [https://github.com/bensheldon/good_job#set-up]
 gem "good_job", "~> 3.20.0"
