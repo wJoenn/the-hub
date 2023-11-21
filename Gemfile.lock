@@ -83,7 +83,6 @@ GEM
     bootsnap (1.17.0)
       msgpack (~> 1.2)
     builder (3.2.4)
-    colorize (0.8.1)
     concurrent-ruby (1.2.2)
     connection_pool (2.4.1)
     crass (1.0.6)
@@ -114,8 +113,7 @@ GEM
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.2)
-    fasterer (0.10.1)
-      colorize (~> 0.7)
+    fasterer (0.11.0)
       ruby_parser (>= 3.19.1)
     fugit (1.9.0)
       et-orbi (~> 1, >= 1.2.7)
@@ -313,7 +311,7 @@ DEPENDENCIES
   dockerfile-rails (~> 1.5.12)
   dotenv-rails
   factory_bot_rails
-  fasterer (~> 0.10.1)
+  fasterer (~> 0.11.0)
   good_job (~> 3.21.1)
   httparty
   octokit (~> 8.0.0)
