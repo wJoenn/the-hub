@@ -43,7 +43,7 @@ gem "httparty"
 gem "octokit", "~> 8.0.0"
 
 # A multithreaded, Postgres-based, ActiveJob backend [https://github.com/bensheldon/good_job#set-up]
-gem "good_job", "~> 3.21.1"
+gem "good_job", "~> 3.21.2"
 
 gem "sentry-ruby", "~> 5.14.0"
 
