@@ -1,47 +1,62 @@
 require:
+  - standard
+  - standard-custom
+  - standard-performance
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
 
+inherit_gem:
+  standard: config/base.yml
+  standard-custom: config/base.yml
+  standard-performance: config/base.yml
+
 AllCops:
   NewCops: enable
-  SuggestExtensions: false
   Exclude:
     - "Gemfile"
     - "bin/**/*"
     - "db/**/*"
     - "config/**/*"
     - "node_modules/**/*"
-    - "resources/**/*"
-    - "script/**/*"
-    - "support/**/*"
     - "spec/spec_helper.rb"
     - "tmp/**/*"
-    - "test/**/*"
-    - "vendor/**/*"
     - "**/_*"
 
-Layout/ArgumentAlignment:
-  EnforcedStyle: with_fixed_indentation
-Layout/MultilineMethodCallIndentation:
-  EnforcedStyle: indented
+Layout/EmptyLineAfterGuardClause:
+  # Enabled: false
+  Enabled: true                                                 # Overwrites standard Enabled: false
+# Layout/IndentFirstArgument:
+#   EnforcedStyle: consistent                                   # Redundant with Layout/ArgumentAlignment enabled by standard
+# Layout/IndentFirstArrayElement:
+#   EnforcedStyle: consistent                                   # Redundant with Layout/ArrayAlignment enabled by standard
+Layout/LineLength:
+  Enabled: true                                                 # Overwrites standard Enabled: false
+  # Max: 160
+  AllowedPatterns: ["# "]
+# Layout/MultilineMethodCallIndentation:
+#   EnforcedStyle: indented                                     # Default in standard
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: "space"                                        # Overwrites standard EnforceStyle: "no_space"
 
-Lint/LiteralAsCondition:
-  Enabled: false
-Lint/MissingSuper:
-  Enabled: false
+Lint/ShadowingOuterLocalVariable:
+  # Enabled: false
+  Enabled: true                                                 # Overwrites standard Eabled: false
 
-Metrics/AbcSize:
-  Enabled: false
-Metrics/BlockLength:
-  Exclude:
-    - "spec/**/*"
-Metrics/ClassLength:
-  CountAsOne: ["array", "hash", "heredoc", "method_call"]
-Metrics/CyclomaticComplexity:
-  Enabled: false
+# Metrics/AbcSize:
+#   Enabled: false                                              # Default in standard
+# Metrics/BlockLength:
+#   Enabled: false                                              # Default in standard
+# Metrics/ClassLength:
+#   Max: 300                                                    # Disabled in standard
+# Metrics/CyclomaticComplexity:
+#   Enabled: false                                              # Default in standard
 Metrics/MethodLength:
+  # Enabled: false
+  Enabled: true                                                 # Overwrites standard Enabled: false
   CountAsOne: ["array", "hash", "heredoc", "method_call"]
+# Metrics/PerceivedComplexity:
+#   Enabled: false                                              # Default in standard
 
 RSpec/ExampleLength:
   Enabled: false
@@ -50,19 +65,23 @@ RSpec/MultipleExpectations:
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
 RSpec/NoExpectationExample:
-  Enabled: false
+  Enabled: false                                                # Disable this
 
-Style/ConditionalAssignment:
-  Enabled: false
-Style/Documentation:
-  Enabled: false
-Style/FrozenStringLiteralComment:
-  Enabled: false
+# Style/AsciiComments:
+#   AllowedChars:                                               # Disabled in standard
+#     - €
+Style/BlockDelimiters:
+  EnforcedStyle: braces_for_chaining                            # Overwrites standard Enabled: false
+# Style/Documentation:
+#   Enabled: false                                              # Default in standard
+# Style/MultilineBlockChain:
+#   Enabled: false                                              # Default in standard
+Style/MultilineTernaryOperator:
+  # Enabled: false
+  Enabled: true                                                 # Overwrites standard Enabled: false
+# Style/NumericPredicate:
+#   Enabled: false                                              # Default in standard
 Style/RegexpLiteral:
-  AllowInnerSlashes: true
-  EnforcedStyle: mixed
-Style/SignalException:
-  Enabled: false
-Style/StringLiterals:
-  Enabled: true
-  EnforcedStyle: double_quotes
+  AllowInnerSlashes: true                                       # Overwrites standard AllowInnerSlashes: false
+# Style/SymbolArray:
+#   EnforcedStyle: brackets                                     # Overwritten by standard EnforcedStyle: percent

@@ -52,18 +52,18 @@ gem "sentry-rails", "~> 5.13.0"
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[mri mingw x64_mingw]
-  gem 'dotenv-rails'
+  gem "dotenv-rails"
 
   gem "rspec-rails"
   gem "factory_bot_rails"
   gem "simplecov"
 
-  gem "rubocop", "~> 1.57.2", require: false
+  gem "standard", "~> 1.32"
   gem "rubocop-performance", require: false
   gem "rubocop-rails", "~> 2.22.1", require: false
   gem "rubocop-rspec", require: false
 
-  gem 'fasterer', '~> 0.10.1'
+  gem "fasterer", "~> 0.10.1"
 end
 
 group :development do
