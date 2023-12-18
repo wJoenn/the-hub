@@ -28,9 +28,9 @@ class FeedItemsController < ApplicationController
     items.map do |item|
       item_class_name = item.class.to_s
       item_name = item_class_name.underscore.delete_prefix("github/")
-      item_controller_class = Object.const_get("#{item_class_name}sController")
+      item_controller_class = "#{item_class_name}sController".constantize
 
-      item_controller_class.new.send("serialized_#{item_name}s", [item]).first
+      item_controller_class.new.send(:"serialized_#{item_name}s", [item]).first
     end
   end
 end
