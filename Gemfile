@@ -71,5 +71,5 @@ group :development do
   # gem "spring"
 
   # [https://github.com/fly-apps/dockerfile-rails]
-  gem "dockerfile-rails", "~> 1.5.12"
+  gem "dockerfile-rails", "~> 1.6.1"
 end
