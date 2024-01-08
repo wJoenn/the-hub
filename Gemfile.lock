@@ -92,7 +92,7 @@ GEM
       reline (>= 0.3.1)
     diff-lcs (1.5.0)
     docile (1.4.0)
-    dockerfile-rails (1.5.12)
+    dockerfile-rails (1.6.3)
       rails (>= 3.0.0)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
@@ -152,14 +152,14 @@ GEM
     msgpack (1.7.2)
     multi_xml (0.6.0)
     mutex_m (0.2.0)
-    net-imap (0.4.4)
+    net-imap (0.4.9.1)
       date
       net-protocol
     net-pop (0.1.2)
       net-protocol
     net-protocol (0.2.2)
       timeout
-    net-smtp (0.4.0)
+    net-smtp (0.4.0.1)
       net-protocol
     nio4r (2.7.0)
     nokogiri (1.16.0-x86_64-linux)
@@ -223,7 +223,7 @@ GEM
     rdoc (6.6.2)
       psych (>= 4.0.0)
     regexp_parser (2.8.3)
-    reline (0.4.1)
+    reline (0.4.2)
       io-console (~> 0.5)
     rexml (3.2.6)
     rspec-core (3.12.2)
@@ -309,7 +309,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (~> 1.17.0)
   debug
-  dockerfile-rails (~> 1.5.12)
+  dockerfile-rails (~> 1.6.3)
   dotenv-rails
   factory_bot_rails
   fasterer (~> 0.11.0)
